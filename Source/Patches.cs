@@ -18,33 +18,33 @@ namespace RealisticRanching
     [HarmonyPatch(typeof(Need_Food), "get_HungerRate")]
     public static class HungerRate_Patch
     {
-        public static void Postfix(Need_Food __instance, ref float __result)
+        public static void Postfix(Need_Food __instance, ref float __result, Pawn ___pawn)
         {
-            Pawn pawn = __instance.pawn;
-            if (pawn?.RaceProps == null) return;
+            // Use ___pawn (3 underscores) because that is how it's defined in the arguments above
+            if (___pawn?.RaceProps == null) return;
 
             var s = RealisticRanchingMod.settings;
             float dietMult = 1f;
 
-            // Apply the Diet Multiplier from Settings
-            if (pawn.RaceProps.IsFlesh)
+            if (___pawn.RaceProps.IsFlesh)
             {
-                switch (pawn.RaceProps.ResolvedDietCategory)
+                switch (___pawn.RaceProps.ResolvedDietCategory)
                 {
                     case DietCategory.Herbivorous: dietMult = s.hungerHerbivorous; break;
-                    case DietCategory.Dendrivorous: dietMult = s.hungerDendrivorous; break;
                     case DietCategory.Omnivorous: dietMult = s.hungerOmnivorous; break;
                     case DietCategory.Carnivorous: dietMult = s.hungerCarnivorous; break;
                 }
             }
 
-            // Kleiber's Law Calculation
-            // Using your Activity Multipliers: Carnivore (1.8), Herbivore (1.6), Omnivore (1.4)
-            float activityMult = pawn.RaceProps.Carnivore ? 1.8f : (pawn.RaceProps.FoodHerbivore ? 1.6f : 1.4f);
-            
-            // Formula: (BodySize^0.75) * Activity * DietSetting
-            // We divide by 1.6 to normalize it so a 'Human' (Size 1) remains roughly 1.0 base.
-            __result = ((float)Math.Pow(pawn.BodySize, 0.75) * activityMult * dietMult) / 1.6f;
+            // Logic check: Use ___pawn here as well
+            float activityMult = 1.4f;
+            if (___pawn.RaceProps.foodType.HasFlag(FoodTypeFlags.Meat) && !___pawn.RaceProps.foodType.HasFlag(FoodTypeFlags.Plant))
+                activityMult = 1.8f;
+            else if (___pawn.RaceProps.foodType.HasFlag(FoodTypeFlags.Plant))
+                activityMult = 1.6f;
+
+            // Formula: Use ___pawn.BodySize
+            __result = ((float)Math.Pow(___pawn.BodySize, 0.75) * activityMult * dietMult) / 1.6f;
         }
     }
 
@@ -53,6 +53,7 @@ namespace RealisticRanching
     {
         public static void Postfix(Pawn_AgeTracker __instance, Pawn ___pawn)
         {
+            // Accessing private field ___pawn via Harmony notation
             if (___pawn.IsHashIntervalTick(60))
             {
                 var s = RealisticRanchingMod.settings;
@@ -63,8 +64,8 @@ namespace RealisticRanching
 
                 if (totalMult > 1f)
                 {
-                    // Adding extra biological age ticks
                     long extraTicks = (long)((totalMult - 1f) * 60);
+                    // Adds extra age biological ticks
                     __instance.DebugSetAge(__instance.AgeBiologicalTicks + extraTicks);
                 }
             }

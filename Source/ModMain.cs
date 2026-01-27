@@ -5,7 +5,8 @@ namespace RealisticRanching
 {
     public class RealisticRanchingMod : Mod
     {
-        public static RealisticRanchingSettings settings;
+        // Adding = null!; tells the compiler this starts null but will be assigned.
+        public static RealisticRanchingSettings settings = null!;
 
         public RealisticRanchingMod(ModContentPack content) : base(content)
         {

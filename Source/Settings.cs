@@ -30,7 +30,7 @@ namespace RealisticRanching
             Scribe_Values.Look(ref ageingSpeedMultiplier, "ageingSpeedMultiplier", 10f);
             Scribe_Values.Look(ref humanAgeingSpeedMultiplier, "humanAgeingSpeedMultiplier", 1f);
             Scribe_Values.Look(ref animalAgeingSpeedMultiplier, "animalAgeingSpeedMultiplier", 1f);
-            
+
             Scribe_Values.Look(ref hungerHerbivorous, "hungerHerbivorous", 0.5f);
             Scribe_Values.Look(ref hungerDendrivorous, "hungerDendrivorous", 0.5f);
             Scribe_Values.Look(ref hungerOmnivorous, "hungerOmnivorous", 0.5f);
@@ -74,13 +74,13 @@ namespace RealisticRanching
             // --- Output Section ---
             listing.Label($"General Animal Output: {animalOutputMultiplier:F2}x");
             animalOutputMultiplier = listing.Slider(animalOutputMultiplier, 0.1f, 10f);
-            
+
             listing.Label($"  - Milk Multiplier: {milkOutputMultiplier:F2}x");
             milkOutputMultiplier = listing.Slider(milkOutputMultiplier, 0.1f, 10f);
-            
+
             listing.Label($"  - Wool Multiplier: {woolOutputMultiplier:F2}x");
             woolOutputMultiplier = listing.Slider(woolOutputMultiplier, 0.1f, 10f);
-            
+
             listing.Label($"  - Leather Multiplier: {leatherOutputMultiplier:F2}x");
             leatherOutputMultiplier = listing.Slider(leatherOutputMultiplier, 0.1f, 10f);
 
