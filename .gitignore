@@ -1,0 +1,16 @@
+# Visual Studio / VS Code
+.vs/
+.vscode/
+
+# Build output
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+*.cache
+*.log
+
+# RimWorld DLL output
+Assemblies/*.pdb

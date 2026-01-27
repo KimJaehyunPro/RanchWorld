@@ -1,18 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net48</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <AssemblyName>Ranchworld</AssemblyName>
-        <OutputPath>..\Assemblies\</OutputPath>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<OutputPath>..\..\Assemblies\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <Reference Include="0Harmony">
-            <HintPath>References\0Harmony.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-    </ItemGroup>
-
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="Harmony">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\0Harmony.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>
