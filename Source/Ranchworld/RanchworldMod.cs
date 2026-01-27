@@ -1,16 +1,14 @@
 using Verse;
 using HarmonyLib;
 
-namespace Ranchworld
+namespace RanchWorld
 {
-    public class RanchworldMod : Mod
+    [StaticConstructorOnStartup]
+    public static class RanchWorldInit
     {
-        public static Harmony harmony;
-
-        public RanchworldMod(ModContentPack content) : base(content)
+        static RanchWorldInit()
         {
-            harmony = new Harmony("ranchworld.core");
-            harmony.PatchAll();
+            Log.Message("[RanchWorld] Loaded");
         }
     }
 }
