@@ -5,7 +5,9 @@
   },
   "libraries": {},
   "projectFileDependencyGroups": {
-    ".NETFramework,Version=v4.8": []
+    ".NETFramework,Version=v4.8": [
+      "HarmonyLib >= 2.3.3"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\hyun5\\.nuget\\packages\\": {}
@@ -20,12 +22,14 @@
       "outputPath": "C:\\Games\\Steam\\steamapps\\common\\RimWorld\\Mods\\RanchWorld\\Source\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\hyun5\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\hyun5\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net48"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -43,13 +47,31 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net48": {
         "targetAlias": "net48",
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.417\\RuntimeIdentifierGraph.json"
+        "dependencies": {
+          "HarmonyLib": {
+            "target": "Package",
+            "version": "[2.3.3, )"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package HarmonyLib. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages, nuget.org",
+      "libraryId": "HarmonyLib",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.8"
+      ]
+    }
+  ]
 }
