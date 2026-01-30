@@ -1,11 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
     <name>RanchWorld</name>
-    <author>Your Name</author>
-    <url></url>
+    <packageId>Foo.RanchWorld</packageId>
+    <author>Foo</author>
     <supportedVersions>
         <li>1.6</li>
     </supportedVersions>
-    <description>
-    Realistic and fun animal ranching. Adjust animal growth, hunger, and output.
-    </description>
+    <description>Realistic Kleiber's Law hunger and aging mechanics.</description>
+    <loadAfter>
+        <li>brrainz.harmony</li>
+    </loadAfter>
 </ModMetaData>

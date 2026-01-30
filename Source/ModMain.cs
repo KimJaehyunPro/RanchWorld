@@ -1,23 +1,17 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
 
-namespace RealisticRanching
+namespace RanchWorld
 {
-    public class RealisticRanchingMod : Mod
+    public class RanchWorldMod : Mod
     {
-        // Adding = null!; tells the compiler this starts null but will be assigned.
-        public static RealisticRanchingSettings settings = null!;
-
-        public RealisticRanchingMod(ModContentPack content) : base(content)
+        public static RanchWorldSettings settings;
+        public RanchWorldMod(ModContentPack content) : base(content)
         {
-            settings = GetSettings<RealisticRanchingSettings>();
+            settings = GetSettings<RanchWorldSettings>();
+            Log.Message("[RanchWorld] Initialized successfully.");
         }
-
-        public override void DoSettingsWindowContents(Rect inRect)
-        {
-            settings.DoWindowContents(inRect);
-        }
-
-        public override string SettingsCategory() => "Realistic Ranching";
+        public override void DoSettingsWindowContents(Rect inRect) => settings.DoWindowContents(inRect);
+        public override string SettingsCategory() => "RanchWorld";
     }
 }
