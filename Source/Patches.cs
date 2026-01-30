@@ -1,29 +1,48 @@
-using UnityEngine;
+﻿using HarmonyLib;
 using Verse;
+using RimWorld;
+using System;
 
 namespace RanchWorld
 {
-    public class RanchWorldSettings : ModSettings
+    [StaticConstructorOnStartup]
+    public static class HarmonyInit
     {
-        public float hungerMultiplier = 0.5f;
-        public float ageingMultiplier = 10f;
-
-        public override void ExposeData()
+        static HarmonyInit()
         {
-            base.ExposeData();
-            Scribe_Values.Look(ref hungerMultiplier, "hungerMultiplier", 0.5f);
-            Scribe_Values.Look(ref ageingMultiplier, "ageingMultiplier", 10f);
+            var harmony = new Harmony("Foo.RanchWorld");
+
+            // We target 'FoodFallPerTick' because it's the property the game uses to drain food.
+            var original = AccessTools.PropertyGetter(typeof(Need_Food), "FoodFallPerTick");
+            var postfix = new HarmonyMethod(typeof(HungerRate_Patch), nameof(HungerRate_Patch.Postfix));
+
+            if (original != null)
+            {
+                harmony.Patch(original, null, postfix);
+                Log.Message("[RanchWorld] Successfully patched FoodFallPerTick.");
+            }
+            else
+            {
+                Log.Error("[RanchWorld] CRITICAL: Could not find FoodFallPerTick in Need_Food!");
+            }
         }
+    }
 
-        public void DoWindowContents(Rect inRect)
+    public static class HungerRate_Patch
+    {
+        public static void Postfix(Need_Food __instance, ref float __result, Pawn ___pawn)
         {
-            Listing_Standard list = new Listing_Standard();
-            list.Begin(inRect);
-            list.Label($"Hunger Multiplier: {hungerMultiplier:F2}x");
-            hungerMultiplier = list.Slider(hungerMultiplier, 0.1f, 5f);
-            list.Label($"Ageing Multiplier: {ageingMultiplier:F2}x");
-            ageingMultiplier = list.Slider(ageingMultiplier, 1f, 100f);
-            list.End();
+            // The ___pawn field is inherited from the base 'Need' class.
+            if (___pawn == null || RanchWorldMod.settings == null) return;
+
+            // Kleiber's Law: Metabolic Rate = (Mass^0.75)
+            // We use the pawn's BodySize as the Mass (M).
+            double mass = (double)___pawn.BodySize;
+            float metabolicScaling = (float)Math.Pow(mass, 0.75);
+
+            // We multiply the game's calculated result by our scaling and the user's multiplier.
+            // This preserves vanilla factors (like health/traits) while adding Kleiber's Law.
+            __result *= metabolicScaling * RanchWorldMod.settings.hungerMultiplier;
         }
     }
 }
