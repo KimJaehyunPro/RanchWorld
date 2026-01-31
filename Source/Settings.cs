@@ -49,14 +49,14 @@ namespace RanchWorld
 
             list.Gap();
 
-            DrawNumericSetting(list, "Base Ageing Speed", ref baseAgeSpeed, ref ageBuf, 0.01f, 100f);
-            DrawNumericSetting(list, "  Human Age Mult", ref humanAgeMult, ref hAgeBuf, 0.01f, 10f);
-            DrawNumericSetting(list, "  Animal Age Mult", ref animalAgeMult, ref aAgeBuf, 0.01f, 10f);
+            DrawNumericSetting(list, "Base Ageing Speed", ref baseAgeSpeed, ref ageBuf, 0.01f, 25f);
+            DrawNumericSetting(list, "  Human Age Mult", ref humanAgeMult, ref hAgeBuf, 0.01f, 25f);
+            DrawNumericSetting(list, "  Animal Age Mult", ref animalAgeMult, ref aAgeBuf, 0.01f, 25f);
             list.GapLine();
             DrawNumericSetting(list, "Global Hunger Mult", ref generalHungerMult, ref gHungerBuf, 0.1f, 10f);
-            DrawNumericSetting(list, "  Herbivore Mult", ref herbivoreHungerMult, ref hHungerBuf, 0.1f, 10f);
-            DrawNumericSetting(list, "  Carnivore Mult", ref carnivoreHungerMult, ref cHungerBuf, 0.1f, 10f);
-            DrawNumericSetting(list, "  Omnivore Mult", ref omnivoreHungerMult, ref oHungerBuf, 0.1f, 10f);
+            DrawNumericSetting(list, "  Herbivore Mult", ref herbivoreHungerMult, ref hHungerBuf, 0.1f, 5f);
+            DrawNumericSetting(list, "  Carnivore Mult", ref carnivoreHungerMult, ref cHungerBuf, 0.1f, 5f);
+            DrawNumericSetting(list, "  Omnivore Mult", ref omnivoreHungerMult, ref oHungerBuf, 0.1f, 5f);
             list.GapLine();
             DrawNumericSetting(list, "General Output Mult", ref generalOutputMult, ref gOutBuf, 0.1f, 10f);
 
