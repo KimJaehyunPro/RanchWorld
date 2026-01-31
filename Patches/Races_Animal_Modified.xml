@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Alpaca"]/race/baseBodySize</xpath>
+                <value>
+                    <baseBodySize>1.08</baseBodySize>
+                </value>
+            </li>
+
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Alpaca"]/race/gestationPeriodDays</xpath>
+                <value>
+                    <gestationPeriodDays>56.7</gestationPeriodDays>
+                </value>
+            </li>
+
+            <li Class="PatchOperationAdd">
+                <xpath>Defs/ThingDef[defName="Alpaca"]/race</xpath>
+                <value>
+                    <litterSizeCurve>
+                        <points>
+                            <li>(1, 1)</li>
+                        </points>
+                    </litterSizeCurve>
+                </value>
+            </li>
+
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Alpaca"]/race/lifeStageAges</xpath>
+                <value>
+                    <lifeStageAges Inherit="false">
+                        <li>
+                            <def>AnimalBaby</def>
+                            <minAge>0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalJuvenile</def>
+                            <minAge>1.66</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalAdult</def>
+                            <minAge>3.33</minAge>
+                        </li>
+                    </lifeStageAges>
+                </value>
+            </li>
+        </operations>
+    </Operation>
+</Patch>
