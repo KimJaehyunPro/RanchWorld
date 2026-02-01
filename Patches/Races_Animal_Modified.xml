@@ -1,5 +1,445 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[@Name="BaseHare"]/race/baseBodySize</xpath>
+                <value>
+                    <baseBodySize>0.05</baseBodySize>
+                </value>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[@Name="BaseHare"]/race/gestationPeriodDays</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[@Name="BaseHare"]/race/gestationPeriodDays</xpath>
+                    <value>
+                        <gestationPeriodDays>6.0</gestationPeriodDays>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[@Name="BaseHare"]/race</xpath>
+                    <value>
+                        <gestationPeriodDays>6.0</gestationPeriodDays>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[@Name="BaseHare"]/race/litterSizeCurve</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[@Name="BaseHare"]/race/litterSizeCurve</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(3, 0)</li>
+                                <li>(4, 1)</li>
+                                <li>(5, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[@Name="BaseHare"]/race</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(3, 0)</li>
+                                <li>(4, 1)</li>
+                                <li>(5, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[@Name="BaseHare"]/race/lifeStageAges</xpath>
+                <value>
+                    <lifeStageAges Inherit="false">
+                        <li>
+                            <def>AnimalBaby</def>
+                            <minAge>0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalJuvenile</def>
+                            <minAge>0.166</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalAdult</def>
+                            <minAge>0.5</minAge>
+                        </li>
+                    </lifeStageAges>
+                </value>
+            </li>
+        </operations>
+    </Operation>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[@Name="BaseBear"]/race/baseBodySize</xpath>
+                <value>
+                    <baseBodySize>5.00</baseBodySize>
+                </value>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[@Name="BaseBear"]/race/gestationPeriodDays</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[@Name="BaseBear"]/race/gestationPeriodDays</xpath>
+                    <value>
+                        <gestationPeriodDays>36.2</gestationPeriodDays>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[@Name="BaseBear"]/race</xpath>
+                    <value>
+                        <gestationPeriodDays>36.2</gestationPeriodDays>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[@Name="BaseBear"]/race/litterSizeCurve</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[@Name="BaseBear"]/race/litterSizeCurve</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(1, 0)</li>
+                                <li>(2, 1)</li>
+                                <li>(3, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[@Name="BaseBear"]/race</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(1, 0)</li>
+                                <li>(2, 1)</li>
+                                <li>(3, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[@Name="BaseBear"]/race/lifeStageAges</xpath>
+                <value>
+                    <lifeStageAges Inherit="false">
+                        <li>
+                            <def>AnimalBaby</def>
+                            <minAge>0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalJuvenile</def>
+                            <minAge>1.0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalAdult</def>
+                            <minAge>3.0</minAge>
+                        </li>
+                    </lifeStageAges>
+                </value>
+            </li>
+        </operations>
+    </Operation>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[@Name="ThingBaseWolf"]/race/baseBodySize</xpath>
+                <value>
+                    <baseBodySize>0.58</baseBodySize>
+                </value>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[@Name="ThingBaseWolf"]/race/gestationPeriodDays</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[@Name="ThingBaseWolf"]/race/gestationPeriodDays</xpath>
+                    <value>
+                        <gestationPeriodDays>10.3</gestationPeriodDays>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[@Name="ThingBaseWolf"]/race</xpath>
+                    <value>
+                        <gestationPeriodDays>10.3</gestationPeriodDays>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[@Name="ThingBaseWolf"]/race/litterSizeCurve</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[@Name="ThingBaseWolf"]/race/litterSizeCurve</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(4, 0)</li>
+                                <li>(5, 1)</li>
+                                <li>(6, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[@Name="ThingBaseWolf"]/race</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(4, 0)</li>
+                                <li>(5, 1)</li>
+                                <li>(6, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[@Name="ThingBaseWolf"]/race/lifeStageAges</xpath>
+                <value>
+                    <lifeStageAges Inherit="false">
+                        <li>
+                            <def>AnimalBaby</def>
+                            <minAge>0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalJuvenile</def>
+                            <minAge>0.66</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalAdult</def>
+                            <minAge>2.0</minAge>
+                        </li>
+                    </lifeStageAges>
+                </value>
+            </li>
+        </operations>
+    </Operation>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[@Name="ThingBaseFox"]/race/baseBodySize</xpath>
+                <value>
+                    <baseBodySize>0.07</baseBodySize>
+                </value>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[@Name="ThingBaseFox"]/race/gestationPeriodDays</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[@Name="ThingBaseFox"]/race/gestationPeriodDays</xpath>
+                    <value>
+                        <gestationPeriodDays>8.5</gestationPeriodDays>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[@Name="ThingBaseFox"]/race</xpath>
+                    <value>
+                        <gestationPeriodDays>8.5</gestationPeriodDays>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[@Name="ThingBaseFox"]/race/litterSizeCurve</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[@Name="ThingBaseFox"]/race/litterSizeCurve</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(4, 0)</li>
+                                <li>(5, 1)</li>
+                                <li>(6, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[@Name="ThingBaseFox"]/race</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(4, 0)</li>
+                                <li>(5, 1)</li>
+                                <li>(6, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[@Name="ThingBaseFox"]/race/lifeStageAges</xpath>
+                <value>
+                    <lifeStageAges Inherit="false">
+                        <li>
+                            <def>AnimalBaby</def>
+                            <minAge>0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalJuvenile</def>
+                            <minAge>0.33</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalAdult</def>
+                            <minAge>1.0</minAge>
+                        </li>
+                    </lifeStageAges>
+                </value>
+            </li>
+        </operations>
+    </Operation>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race/baseBodySize</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race/baseBodySize</xpath>
+                    <value>
+                        <baseBodySize>0.07</baseBodySize>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race</xpath>
+                    <value>
+                        <baseBodySize>0.07</baseBodySize>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race/gestationPeriodDays</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race/gestationPeriodDays</xpath>
+                    <value>
+                        <gestationPeriodDays>8.5</gestationPeriodDays>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race</xpath>
+                    <value>
+                        <gestationPeriodDays>8.5</gestationPeriodDays>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race/litterSizeCurve</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race/litterSizeCurve</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(4, 0)</li>
+                                <li>(5, 1)</li>
+                                <li>(6, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race</xpath>
+                    <value>
+                        <litterSizeCurve Inherit="false">
+                            <points>
+                                <li>(4, 0)</li>
+                                <li>(5, 1)</li>
+                                <li>(6, 0)</li>
+                            </points>
+                        </litterSizeCurve>
+                    </value>
+                </nomatch>
+            </li>
+            <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race/lifeStageAges</xpath>
+                <match Class="PatchOperationReplace">
+                    <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race/lifeStageAges</xpath>
+                    <value>
+                        <lifeStageAges Inherit="false">
+                            <li>
+                                <def>AnimalBaby</def>
+                                <minAge>0</minAge>
+                            </li>
+                            <li>
+                                <def>AnimalJuvenile</def>
+                                <minAge>0.33</minAge>
+                            </li>
+                            <li>
+                                <def>AnimalAdult</def>
+                                <minAge>1.0</minAge>
+                            </li>
+                        </lifeStageAges>
+                    </value>
+                </match>
+                <nomatch Class="PatchOperationAdd">
+                    <xpath>Defs/ThingDef[defName="Fox_Arctic"]/race</xpath>
+                    <value>
+                        <lifeStageAges Inherit="false">
+                            <li>
+                                <def>AnimalBaby</def>
+                                <minAge>0</minAge>
+                            </li>
+                            <li>
+                                <def>AnimalJuvenile</def>
+                                <minAge>0.33</minAge>
+                            </li>
+                            <li>
+                                <def>AnimalAdult</def>
+                                <minAge>1.0</minAge>
+                            </li>
+                        </lifeStageAges>
+                    </value>
+                </nomatch>
+            </li>
+        </operations>
+    </Operation>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Pig"]/race/baseBodySize</xpath>
+                <value>
+                    <baseBodySize>2.50</baseBodySize>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Pig"]/race/gestationPeriodDays</xpath>
+                <value>
+                    <gestationPeriodDays>18.7</gestationPeriodDays>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Pig"]/race/litterSizeCurve</xpath>
+                <value>
+                    <litterSizeCurve Inherit="false">
+                        <points>
+                            <li>(9, 0)</li>
+                            <li>(10, 1)</li>
+                            <li>(11, 0)</li>
+                        </points>
+                    </litterSizeCurve>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Pig"]/race/lifeStageAges</xpath>
+                <value>
+                    <lifeStageAges Inherit="false">
+                        <li>
+                            <def>AnimalBaby</def>
+                            <minAge>0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalJuvenile</def>
+                            <minAge>0.5</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalAdult</def>
+                            <minAge>1.5</minAge>
+                        </li>
+                    </lifeStageAges>
+                </value>
+            </li>
+        </operations>
+    </Operation>
+
     <Operation Class="PatchOperationSequence">
         <operations>
             <li Class="PatchOperationReplace">
@@ -8,14 +448,12 @@
                     <baseBodySize>1.08</baseBodySize>
                 </value>
             </li>
-
             <li Class="PatchOperationReplace">
                 <xpath>Defs/ThingDef[defName="Alpaca"]/race/gestationPeriodDays</xpath>
                 <value>
                     <gestationPeriodDays>56.7</gestationPeriodDays>
                 </value>
             </li>
-
             <li Class="PatchOperationAdd">
                 <xpath>Defs/ThingDef[defName="Alpaca"]/race</xpath>
                 <value>
@@ -26,7 +464,6 @@
                     </litterSizeCurve>
                 </value>
             </li>
-
             <li Class="PatchOperationReplace">
                 <xpath>Defs/ThingDef[defName="Alpaca"]/race/lifeStageAges</xpath>
                 <value>
@@ -48,4 +485,92 @@
             </li>
         </operations>
     </Operation>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Elephant"]/race/baseBodySize</xpath>
+                <value>
+                    <baseBodySize>83.33</baseBodySize>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Elephant"]/race/gestationPeriodDays</xpath>
+                <value>
+                    <gestationPeriodDays>105.2</gestationPeriodDays>
+                </value>
+            </li>
+            <li Class="PatchOperationAdd">
+                <xpath>Defs/ThingDef[defName="Elephant"]/race</xpath>
+                <value>
+                    <litterSizeCurve>
+                        <points>
+                            <li>(1, 1)</li>
+                        </points>
+                    </litterSizeCurve>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Elephant"]/race/lifeStageAges</xpath>
+                <value>
+                    <lifeStageAges Inherit="false">
+                        <li>
+                            <def>AnimalBaby</def>
+                            <minAge>0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalJuvenile</def>
+                            <minAge>5.0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalAdult</def>
+                            <minAge>15.0</minAge>
+                        </li>
+                    </lifeStageAges>
+                </value>
+            </li>
+        </operations>
+    </Operation>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Chicken"]/race/baseBodySize</xpath>
+                <value>
+                    <baseBodySize>0.04</baseBodySize>
+                </value>
+            </li>
+            <li Class="PatchOperationAdd">
+                <xpath>Defs/ThingDef[defName="Chicken"]/race</xpath>
+                <value>
+                    <gestationPeriodDays>3.5</gestationPeriodDays>
+                    <litterSizeCurve>
+                        <points>
+                            <li>(1, 1)</li>
+                        </points>
+                    </litterSizeCurve>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>Defs/ThingDef[defName="Chicken"]/race/lifeStageAges</xpath>
+                <value>
+                    <lifeStageAges Inherit="false">
+                        <li>
+                            <def>AnimalBaby</def>
+                            <minAge>0</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalJuvenile</def>
+                            <minAge>0.166</minAge>
+                        </li>
+                        <li>
+                            <def>AnimalAdult</def>
+                            <minAge>0.5</minAge>
+                        </li>
+                    </lifeStageAges>
+                </value>
+            </li>
+        </operations>
+    </Operation>
+
 </Patch>
