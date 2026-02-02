@@ -15,30 +15,43 @@ namespace RanchWorld
         {
             var harmony = new Harmony("Foo.RanchWorld");
 
-            // Hunger Rate (Metabolism)
+            // --- EXISTING PATCHES ---
+
             harmony.Patch(AccessTools.PropertyGetter(typeof(Need_Food), "FoodFallPerTick"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.HungerPostfix)));
 
-            // Stomach Size (Max Food)
             harmony.Patch(AccessTools.PropertyGetter(typeof(Need_Food), "MaxLevel"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.StomachPostfix)));
 
-            // Growth and Ageing
             harmony.Patch(AccessTools.PropertyGetter(typeof(Pawn_AgeTracker), "BiologicalTicksPerTick"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.AgeingPostfix)));
 
             harmony.Patch(AccessTools.Method(typeof(Hediff), nameof(Hediff.Tick)),
                 new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.GestationPrefix)));
 
-            // Production and Butcher Yields
             harmony.Patch(AccessTools.PropertyGetter(typeof(CompMilkable), "ResourceAmount"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.OutputPostfix)));
+
             harmony.Patch(AccessTools.PropertyGetter(typeof(CompShearable), "ResourceAmount"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.OutputPostfix)));
+
             harmony.Patch(AccessTools.Method(typeof(Pawn), nameof(Pawn.ButcherProducts)),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.ButcherPostfix)));
+
             harmony.Patch(AccessTools.Method(typeof(CompHasGatherableBodyResource), "CompTick"),
                 new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.GatherFreqPrefix)));
+
+            // --- NEW COMBAT PATCHES ---
+
+            // Health Scale
+            harmony.Patch(AccessTools.PropertyGetter(typeof(Pawn), "HealthScale"),
+                null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.HealthScalePostfix)));
+
+            // Melee Damage (FIXED: Added parameter types to resolve ambiguity)
+            // We must target: AdjustedMeleeDamageAmount(Tool tool, Pawn attacker, Thing equipment, HediffComp_VerbGiver hediffCompSource)
+            harmony.Patch(AccessTools.Method(typeof(VerbProperties), "AdjustedMeleeDamageAmount",
+                new Type[] { typeof(Tool), typeof(Pawn), typeof(Thing), typeof(HediffComp_VerbGiver) }),
+                null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.DamageScalePostfix)));
         }
     }
 
@@ -48,18 +61,37 @@ namespace RanchWorld
         private static readonly FieldInfo animalGestField = AccessTools.Field(typeof(Hediff_Pregnant), "gestationProgress");
         private static readonly FieldInfo humanGestField = AccessTools.Field(AccessTools.TypeByName("RimWorld.Hediff_PregnantHuman"), "gestationProgress");
 
+        // --- COMBAT METHODS ---
+
+        public static void HealthScalePostfix(Pawn __instance, ref float __result)
+        {
+            if (__instance == null || RanchWorldMod.settings == null) return;
+
+            if (__instance.RaceProps.Animal)
+            {
+                __result = __instance.BodySize * RanchWorldMod.settings.healthScaleMult;
+            }
+        }
+
+        public static void DamageScalePostfix(VerbProperties __instance, Tool tool, Pawn attacker, ref float __result)
+        {
+            if (attacker == null || RanchWorldMod.settings == null) return;
+
+            if (attacker.RaceProps.Animal)
+            {
+                __result *= attacker.BodySize * RanchWorldMod.settings.damageScaleMult;
+            }
+        }
+
+        // --- EXISTING METHODS ---
+
         public static void StomachPostfix(Need_Food __instance, ref float __result, Pawn ___pawn)
         {
             if (___pawn == null || RanchWorldMod.settings == null) return;
-
-            // Start with base BodySize as the foundation for stomach capacity
             float mult = RanchWorldMod.settings.generalStomachMult;
-
-            // Category Hierarchy
             if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanStomachMult;
             else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalStomachMult;
 
-            // Diet Hierarchy
             FoodTypeFlags flags = ___pawn.RaceProps.foodType;
             bool plants = (flags & FoodTypeFlags.VegetarianAnimal) != 0 || (flags & FoodTypeFlags.Plant) != 0;
             bool meat = (flags & FoodTypeFlags.Meat) != 0 || (flags & FoodTypeFlags.CarnivoreAnimal) != 0;
@@ -68,16 +100,13 @@ namespace RanchWorld
             else if (meat && !plants) mult *= RanchWorldMod.settings.carnivoreStomachMult;
             else mult *= RanchWorldMod.settings.omnivoreStomachMult;
 
-            // Override vanilla MaxLevel
             __result = ___pawn.BodySize * mult;
         }
 
         public static void HungerPostfix(Need_Food __instance, ref float __result, Pawn ___pawn)
         {
             if (___pawn == null || RanchWorldMod.settings == null) return;
-
             float mult = RanchWorldMod.settings.generalHungerMult;
-
             if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanHungerMult;
             else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalHungerMult;
 

@@ -27,11 +27,16 @@ namespace RanchWorld
         public float generalOutputMult = DefaultMult, milkOutputMult = DefaultMult, woolOutputMult = DefaultMult, gatherFreqMult = 1f;
         public float generalButcherMult = DefaultMult, meatButcherMult = DefaultMult, leatherButcherMult = DefaultMult;
 
+        // NEW: Combat Settings
+        public float healthScaleMult = 1.0f;
+        public float damageScaleMult = 0.5f; // Defaulted lower to avoid overpowered animals
+
         private Vector2 scrollPosition = Vector2.zero;
         private string bGrowBuf, hGrowBuf, hAgeBuf, hGestBuf, aGrowBuf, aAgeBuf, aGestBuf;
         private string gHungerBuf, hHungerBuf_Cat, aHungerBuf_Cat, hHungerBuf, cHungerBuf, oHungerBuf;
         private string gStomBuf, hStomBuf_Cat, aStomBuf_Cat, hStomBuf, cStomBuf, oStomBuf;
         private string gOutBuf, mOutBuf, wOutBuf, gFreqBuf, bGenBuf, bMeatBuf, bLeathBuf;
+        private string healthBuf, damageBuf;
 
         public override void ExposeData()
         {
@@ -65,6 +70,10 @@ namespace RanchWorld
             Scribe_Values.Look(ref generalButcherMult, "generalButcherMult", 1f);
             Scribe_Values.Look(ref meatButcherMult, "meatButcherMult", 1f);
             Scribe_Values.Look(ref leatherButcherMult, "leatherButcherMult", 1f);
+
+            // NEW: Scribe Combat Settings
+            Scribe_Values.Look(ref healthScaleMult, "healthScaleMult", 1.0f);
+            Scribe_Values.Look(ref damageScaleMult, "damageScaleMult", 0.5f);
         }
 
         public void DoWindowContents(Rect inRect)
@@ -72,7 +81,7 @@ namespace RanchWorld
             if (Widgets.ButtonText(new Rect(0f, 0f, 150f, 30f), "Reset to Defaults")) ResetSettings();
 
             Rect outRect = new Rect(0f, 40f, inRect.width, inRect.height - 40f);
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1600f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1750f); // Increased height for new options
 
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
             Listing_Standard list = new Listing_Standard();
@@ -127,6 +136,14 @@ namespace RanchWorld
             DrawNumericSetting(list, "General Butcher Yield", ref generalButcherMult, ref bGenBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Meat Yield", ref meatButcherMult, ref bMeatBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Leather Yield", ref leatherButcherMult, ref bLeathBuf, GlobalMin, 10f);
+            list.GapLine();
+
+            // NEW: Combat Section
+            Text.Font = GameFont.Medium;
+            list.Label("Combat Scaling (Based on Body Size)");
+            Text.Font = GameFont.Small;
+            DrawNumericSetting(list, "Health Scale Multiplier", ref healthScaleMult, ref healthBuf, 0.1f, 5f);
+            DrawNumericSetting(list, "Melee Damage Multiplier", ref damageScaleMult, ref damageBuf, 0.1f, 5f);
 
             list.End();
             Widgets.EndScrollView();
@@ -149,7 +166,13 @@ namespace RanchWorld
             generalHungerMult = 1f; humanHungerMult = 1f; animalHungerMult = 1f; herbivoreHungerMult = 1.7f; carnivoreHungerMult = 0.7f; omnivoreHungerMult = 1f;
             generalStomachMult = 3f; humanStomachMult = 1f; animalStomachMult = 1f; herbivoreStomachMult = 2.5f; carnivoreStomachMult = 1.3f; omnivoreStomachMult = 1f;
             generalOutputMult = milkOutputMult = woolOutputMult = gatherFreqMult = generalButcherMult = meatButcherMult = leatherButcherMult = 1f;
+
+            // NEW: Reset Combat
+            healthScaleMult = 1.0f;
+            damageScaleMult = 0.5f;
+
             bGrowBuf = hGrowBuf = hAgeBuf = hGestBuf = aGrowBuf = aAgeBuf = aGestBuf = gHungerBuf = hHungerBuf_Cat = aHungerBuf_Cat = hHungerBuf = cHungerBuf = oHungerBuf = gStomBuf = hStomBuf_Cat = aStomBuf_Cat = hStomBuf = cStomBuf = oStomBuf = gOutBuf = mOutBuf = wOutBuf = gFreqBuf = bGenBuf = bMeatBuf = bLeathBuf = null;
+            healthBuf = damageBuf = null;
         }
     }
 }
