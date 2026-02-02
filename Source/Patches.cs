@@ -21,7 +21,6 @@ namespace RanchWorld
             harmony.Patch(AccessTools.PropertyGetter(typeof(Pawn_AgeTracker), "BiologicalTicksPerTick"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.AgeingPostfix)));
 
-            // Patching the base Hediff.Tick ensures we catch both Human and Animal pregnancies
             harmony.Patch(AccessTools.Method(typeof(Hediff), nameof(Hediff.Tick)),
                 new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.GestationPrefix)));
 
@@ -41,8 +40,6 @@ namespace RanchWorld
     public static class RanchPatches
     {
         private static readonly FieldInfo fullnessField = AccessTools.Field(typeof(CompHasGatherableBodyResource), "fullness");
-
-        // FieldInfo references for both human and animal pregnancy progress
         private static readonly FieldInfo animalGestField = AccessTools.Field(typeof(Hediff_Pregnant), "gestationProgress");
         private static readonly FieldInfo humanGestField = AccessTools.Field(AccessTools.TypeByName("RimWorld.Hediff_PregnantHuman"), "gestationProgress");
 
@@ -58,13 +55,9 @@ namespace RanchWorld
         public static void GestationPrefix(Hediff __instance)
         {
             if (RanchWorldMod.settings == null || __instance.pawn == null) return;
-
-            // Identify which field to use based on the hediff type
             FieldInfo targetField = null;
             if (__instance is Hediff_Pregnant) targetField = animalGestField;
             else if (__instance.GetType().Name == "Hediff_PregnantHuman") targetField = humanGestField;
-
-            // If it's not a pregnancy we recognize, exit immediately
             if (targetField == null) return;
 
             float mult = RanchWorldMod.settings.baseGrowthMult;
@@ -82,13 +75,24 @@ namespace RanchWorld
         public static void HungerPostfix(Need_Food __instance, ref float __result, Pawn ___pawn)
         {
             if (___pawn == null || RanchWorldMod.settings == null) return;
+
+            // 1. Start with Global Hunger
             float mult = RanchWorldMod.settings.generalHungerMult;
+
+            // 2. Add Category (Human vs Animal) Hierarchy
+            if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanHungerMult;
+            else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalHungerMult;
+
+            // 3. Keep Diet Tweaks
             FoodTypeFlags flags = ___pawn.RaceProps.foodType;
             bool plants = (flags & FoodTypeFlags.VegetarianAnimal) != 0 || (flags & FoodTypeFlags.Plant) != 0;
             bool meat = (flags & FoodTypeFlags.Meat) != 0 || (flags & FoodTypeFlags.CarnivoreAnimal) != 0;
+
             if (plants && !meat) mult *= RanchWorldMod.settings.herbivoreHungerMult;
             else if (meat && !plants) mult *= RanchWorldMod.settings.carnivoreHungerMult;
             else mult *= RanchWorldMod.settings.omnivoreHungerMult;
+
+            // 4. Apply final calculation
             __result *= (float)Math.Pow(___pawn.BodySize, 0.75) * mult;
         }
 
