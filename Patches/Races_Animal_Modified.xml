@@ -1120,6 +1120,122 @@
     <Operation Class="PatchOperationSequence">
         <operations>
             <li Class="PatchOperationConditional">
+                <xpath>Defs/ThingDef[defName="Thrumbo"]</xpath>
+                <match Class="PatchOperationSequence">
+                    <operations>
+                        <li Class="PatchOperationConditional">
+                            <xpath>Defs/ThingDef[defName="Thrumbo"]/race/baseBodySize</xpath>
+                            <match Class="PatchOperationReplace">
+                                <xpath>Defs/ThingDef[defName="Thrumbo"]/race/baseBodySize</xpath>
+                                <value>
+                                    <baseBodySize>93.33</baseBodySize>
+                                </value>
+                            </match>
+                            <nomatch Class="PatchOperationAdd">
+                                <xpath>Defs/ThingDef[defName="Thrumbo"]/race</xpath>
+                                <value>
+                                    <baseBodySize>93.33</baseBodySize>
+                                </value>
+                            </nomatch>
+                        </li>
+
+                        <li Class="PatchOperationConditional">
+                            <xpath>Defs/ThingDef[defName="Thrumbo"]/race/gestationPeriodDays</xpath>
+                            <match Class="PatchOperationReplace">
+                                <xpath>Defs/ThingDef[defName="Thrumbo"]/race/gestationPeriodDays</xpath>
+                                <value>
+                                    <gestationPeriodDays>80</gestationPeriodDays>
+                                </value>
+                            </match>
+                            <nomatch Class="PatchOperationAdd">
+                                <xpath>Defs/ThingDef[defName="Thrumbo"]/race</xpath>
+                                <value>
+                                    <gestationPeriodDays>80</gestationPeriodDays>
+                                </value>
+                            </nomatch>
+                        </li>
+
+                        <li Class="PatchOperationConditional">
+                            <xpath>Defs/ThingDef[defName="Thrumbo"]/race/litterSizeCurve</xpath>
+                            <match Class="PatchOperationReplace">
+                                <xpath>Defs/ThingDef[defName="Thrumbo"]/race/litterSizeCurve</xpath>
+                                <value>
+                                    <litterSizeCurve Inherit="false">
+                                        <points>
+                                            <li>(1, 1)</li>
+                                        </points>
+                                    </litterSizeCurve>
+                                </value>
+                            </match>
+                            <nomatch Class="PatchOperationAdd">
+                                <xpath>Defs/ThingDef[defName="Thrumbo"]/race</xpath>
+                                <value>
+                                    <litterSizeCurve Inherit="false">
+                                        <points>
+                                            <li>(1, 1)</li>
+                                        </points>
+                                    </litterSizeCurve>
+                                </value>
+                            </nomatch>
+                        </li>
+
+                        <li Class="PatchOperationConditional">
+                            <xpath>Defs/ThingDef[defName="Thrumbo"]/race/lifeStageAges</xpath>
+                            <match Class="PatchOperationSequence">
+                                <operations>
+                                    <li Class="PatchOperationRemove">
+                                        <xpath>Defs/ThingDef[defName="Thrumbo"]/race/lifeStageAges</xpath>
+                                    </li>
+                                    <li Class="PatchOperationAdd">
+                                        <xpath>Defs/ThingDef[defName="Thrumbo"]/race</xpath>
+                                        <value>
+                                            <lifeStageAges>
+                                                <li>
+                                                    <def>AnimalBaby</def>
+                                                    <minAge>0</minAge>
+                                                </li>
+                                                <li>
+                                                    <def>AnimalJuvenile</def>
+                                                    <minAge>2.4</minAge>
+                                                </li>
+                                                <li>
+                                                    <def>AnimalAdult</def>
+                                                    <minAge>4.8</minAge>
+                                                </li>
+                                            </lifeStageAges>
+                                        </value>
+                                    </li>
+                                </operations>
+                            </match>
+                            <nomatch Class="PatchOperationAdd">
+                                <xpath>Defs/ThingDef[defName="Thrumbo"]/race</xpath>
+                                <value>
+                                    <lifeStageAges>
+                                        <li>
+                                            <def>AnimalBaby</def>
+                                            <minAge>0</minAge>
+                                        </li>
+                                        <li>
+                                            <def>AnimalJuvenile</def>
+                                            <minAge>2.4</minAge>
+                                        </li>
+                                        <li>
+                                            <def>AnimalAdult</def>
+                                            <minAge>4.8</minAge>
+                                        </li>
+                                    </lifeStageAges>
+                                </value>
+                            </nomatch>
+                        </li>
+                    </operations>
+                </match>
+            </li>
+        </operations>
+    </Operation>
+
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationConditional">
                 <xpath>Defs/ThingDef[defName="AlphaThrumbo"]</xpath>
                 <match Class="PatchOperationSequence">
                     <operations>
