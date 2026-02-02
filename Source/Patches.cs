@@ -62,13 +62,28 @@ namespace RanchWorld
         public static void ButcherPostfix(Pawn __instance, ref IEnumerable<Thing> __result)
         {
             if (RanchWorldMod.settings == null) return;
+
+            // We must materialize the IEnumerable into a List to modify the items
+            List<Thing> modifiedResults = new List<Thing>();
+
             foreach (Thing t in __result)
             {
                 float mult = RanchWorldMod.settings.generalButcherMult;
                 if (t.def.IsMeat) mult *= RanchWorldMod.settings.meatButcherMult;
                 if (t.def.IsLeather) mult *= RanchWorldMod.settings.leatherButcherMult;
+
+                // Apply the multiplier to the stack count
                 t.stackCount = Mathf.RoundToInt(t.stackCount * mult);
+
+                // Only add if the stack count is at least 1
+                if (t.stackCount > 0)
+                {
+                    modifiedResults.Add(t);
+                }
             }
+
+            // Replace the original result with our modified list
+            __result = modifiedResults;
         }
 
         public static void GatherFreqPrefix(CompHasGatherableBodyResource __instance)
