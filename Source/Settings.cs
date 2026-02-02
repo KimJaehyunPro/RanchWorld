@@ -13,45 +13,58 @@ namespace RanchWorld
         public float humanGrowthMult = DefaultMult, humanAgeMult = DefaultMult, humanGestMult = DefaultMult;
         public float animalGrowthMult = DefaultMult, animalAgeMult = DefaultMult, animalGestMult = DefaultMult;
 
-        // Hunger Hierarchy
-        public float generalHungerMult = 1f;
-        public float humanHungerMult = DefaultMult;
-        public float animalHungerMult = DefaultMult;
-        public float herbivoreHungerMult = 2f;
-        public float carnivoreHungerMult = 1f;
-        public float omnivoreHungerMult = 1f;
+        public float generalHungerMult = 1f, humanHungerMult = DefaultMult, animalHungerMult = DefaultMult;
+        public float herbivoreHungerMult = 2f, carnivoreHungerMult = 1f, omnivoreHungerMult = 1f;
+
+        // Stomach Hierarchy
+        public float generalStomachMult = 1f;
+        public float humanStomachMult = DefaultMult;
+        public float animalStomachMult = DefaultMult;
+        public float herbivoreStomachMult = 1f;
+        public float carnivoreStomachMult = 1f;
+        public float omnivoreStomachMult = 1f;
 
         public float generalOutputMult = DefaultMult, milkOutputMult = DefaultMult, woolOutputMult = DefaultMult, gatherFreqMult = 1f;
         public float generalButcherMult = DefaultMult, meatButcherMult = DefaultMult, leatherButcherMult = DefaultMult;
 
         private Vector2 scrollPosition = Vector2.zero;
-        private string bGrowBuf, hGrowBuf, hAgeBuf, hGestBuf, aGrowBuf, aAgeBuf, aGestBuf, gHungerBuf, hHungerBuf, cHungerBuf, oHungerBuf, gOutBuf, mOutBuf, wOutBuf, gFreqBuf, bGenBuf, bMeatBuf, bLeathBuf, hHungerBuf_Cat, aHungerBuf_Cat;
+        private string bGrowBuf, hGrowBuf, hAgeBuf, hGestBuf, aGrowBuf, aAgeBuf, aGestBuf;
+        private string gHungerBuf, hHungerBuf_Cat, aHungerBuf_Cat, hHungerBuf, cHungerBuf, oHungerBuf;
+        private string gStomBuf, hStomBuf_Cat, aStomBuf_Cat, hStomBuf, cStomBuf, oStomBuf;
+        private string gOutBuf, mOutBuf, wOutBuf, gFreqBuf, bGenBuf, bMeatBuf, bLeathBuf;
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref baseGrowthMult, "baseGrowthMult", 5f);
-            Scribe_Values.Look(ref humanGrowthMult, "humanGrowthMult", DefaultMult);
-            Scribe_Values.Look(ref humanAgeMult, "humanAgeMult", DefaultMult);
-            Scribe_Values.Look(ref humanGestMult, "humanGestMult", DefaultMult);
-            Scribe_Values.Look(ref animalGrowthMult, "animalGrowthMult", DefaultMult);
-            Scribe_Values.Look(ref animalAgeMult, "animalAgeMult", DefaultMult);
-            Scribe_Values.Look(ref animalGestMult, "animalGestMult", DefaultMult);
+            Scribe_Values.Look(ref humanGrowthMult, "humanGrowthMult", 1f);
+            Scribe_Values.Look(ref humanAgeMult, "humanAgeMult", 1f);
+            Scribe_Values.Look(ref humanGestMult, "humanGestMult", 1f);
+            Scribe_Values.Look(ref animalGrowthMult, "animalGrowthMult", 1f);
+            Scribe_Values.Look(ref animalAgeMult, "animalAgeMult", 1f);
+            Scribe_Values.Look(ref animalGestMult, "animalGestMult", 1f);
 
             Scribe_Values.Look(ref generalHungerMult, "generalHungerMult", 1f);
-            Scribe_Values.Look(ref humanHungerMult, "humanHungerMult", DefaultMult);
-            Scribe_Values.Look(ref animalHungerMult, "animalHungerMult", DefaultMult);
+            Scribe_Values.Look(ref humanHungerMult, "humanHungerMult", 1f);
+            Scribe_Values.Look(ref animalHungerMult, "animalHungerMult", 1f);
             Scribe_Values.Look(ref herbivoreHungerMult, "herbivoreHungerMult", 2f);
             Scribe_Values.Look(ref carnivoreHungerMult, "carnivoreHungerMult", 1f);
             Scribe_Values.Look(ref omnivoreHungerMult, "omnivoreHungerMult", 1f);
 
-            Scribe_Values.Look(ref generalOutputMult, "generalOutputMult", DefaultMult);
-            Scribe_Values.Look(ref milkOutputMult, "milkOutputMult", DefaultMult);
-            Scribe_Values.Look(ref woolOutputMult, "woolOutputMult", DefaultMult);
+            Scribe_Values.Look(ref generalStomachMult, "generalStomachMult", 1f);
+            Scribe_Values.Look(ref humanStomachMult, "humanStomachMult", 1f);
+            Scribe_Values.Look(ref animalStomachMult, "animalStomachMult", 1f);
+            Scribe_Values.Look(ref herbivoreStomachMult, "herbivoreStomachMult", 1f);
+            Scribe_Values.Look(ref carnivoreStomachMult, "carnivoreStomachMult", 1f);
+            Scribe_Values.Look(ref omnivoreStomachMult, "omnivoreStomachMult", 1f);
+
+            Scribe_Values.Look(ref generalOutputMult, "generalOutputMult", 1f);
+            Scribe_Values.Look(ref milkOutputMult, "milkOutputMult", 1f);
+            Scribe_Values.Look(ref woolOutputMult, "woolOutputMult", 1f);
             Scribe_Values.Look(ref gatherFreqMult, "gatherFreqMult", 1f);
-            Scribe_Values.Look(ref generalButcherMult, "generalButcherMult", DefaultMult);
-            Scribe_Values.Look(ref meatButcherMult, "meatButcherMult", DefaultMult);
-            Scribe_Values.Look(ref leatherButcherMult, "leatherButcherMult", DefaultMult);
+            Scribe_Values.Look(ref generalButcherMult, "generalButcherMult", 1f);
+            Scribe_Values.Look(ref meatButcherMult, "meatButcherMult", 1f);
+            Scribe_Values.Look(ref leatherButcherMult, "leatherButcherMult", 1f);
         }
 
         public void DoWindowContents(Rect inRect)
@@ -59,16 +72,16 @@ namespace RanchWorld
             if (Widgets.ButtonText(new Rect(0f, 0f, 150f, 30f), "Reset to Defaults")) ResetSettings();
 
             Rect outRect = new Rect(0f, 40f, inRect.width, inRect.height - 40f);
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1250f); // Height increased for new fields
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1600f);
 
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
 
             Text.Font = GameFont.Medium;
-            list.Label("Growth & Ageing Hierarchy");
+            list.Label("Growth");
             Text.Font = GameFont.Small;
-            DrawNumericSetting(list, "Global Growth Mult", ref baseGrowthMult, ref bGrowBuf, GlobalMin, 25f);
+            DrawNumericSetting(list, "Global Growth", ref baseGrowthMult, ref bGrowBuf, GlobalMin, 60f);
             DrawNumericSetting(list, "  Human Growth", ref humanGrowthMult, ref hGrowBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "    Human Ageing", ref humanAgeMult, ref hAgeBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "    Human Gestation", ref humanGestMult, ref hGestBuf, GlobalMin, 10f);
@@ -78,31 +91,42 @@ namespace RanchWorld
             list.GapLine();
 
             Text.Font = GameFont.Medium;
-            list.Label("Dietary Hunger Hierarchy");
+            list.Label("Hunger Rate");
             Text.Font = GameFont.Small;
-            DrawNumericSetting(list, "Global Hunger Mult", ref generalHungerMult, ref gHungerBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Human Hunger Mult", ref humanHungerMult, ref hHungerBuf_Cat, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Animal Hunger Mult", ref animalHungerMult, ref aHungerBuf_Cat, GlobalMin, 10f);
-            DrawNumericSetting(list, "    Herbivore Mult", ref herbivoreHungerMult, ref hHungerBuf, GlobalMin, 5f);
-            DrawNumericSetting(list, "    Carnivore Mult", ref carnivoreHungerMult, ref cHungerBuf, GlobalMin, 5f);
-            DrawNumericSetting(list, "    Omnivore Mult", ref omnivoreHungerMult, ref oHungerBuf, GlobalMin, 5f);
+            DrawNumericSetting(list, "Global Hunger Rate", ref generalHungerMult, ref gHungerBuf, GlobalMin, 5f);
+            DrawNumericSetting(list, "  Human Hunger Rate", ref humanHungerMult, ref hHungerBuf_Cat, GlobalMin, 5f);
+            DrawNumericSetting(list, "  Animal Hunger Rate", ref animalHungerMult, ref aHungerBuf_Cat, GlobalMin, 5f);
+            DrawNumericSetting(list, "    Herbivore Hunger Rate", ref herbivoreHungerMult, ref hHungerBuf, GlobalMin, 5f);
+            DrawNumericSetting(list, "    Carnivore Hunger Rate", ref carnivoreHungerMult, ref cHungerBuf, GlobalMin, 5f);
+            DrawNumericSetting(list, "    Omnivore Hunger Rate", ref omnivoreHungerMult, ref oHungerBuf, GlobalMin, 5f);
             list.GapLine();
 
             Text.Font = GameFont.Medium;
-            list.Label("Production Output");
+            list.Label("Stomach Capacity");
             Text.Font = GameFont.Small;
-            DrawNumericSetting(list, "General Output Mult", ref generalOutputMult, ref gOutBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Milk Amount Mult", ref milkOutputMult, ref mOutBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Wool Amount Mult", ref woolOutputMult, ref wOutBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "Global Stomach Capacity", ref generalStomachMult, ref gStomBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Human Stomach Capacity", ref humanStomachMult, ref hStomBuf_Cat, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Animal Stomach Capacity", ref animalStomachMult, ref aStomBuf_Cat, GlobalMin, 10f);
+            DrawNumericSetting(list, "    Herbivore Stomach Capacity", ref herbivoreStomachMult, ref hStomBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "    Carnivore Stomach Capacity", ref carnivoreStomachMult, ref cStomBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "    Omnivore Stomach Capacity", ref omnivoreStomachMult, ref oStomBuf, GlobalMin, 10f);
+            list.GapLine();
+
+            Text.Font = GameFont.Medium;
+            list.Label("Production Yields");
+            Text.Font = GameFont.Small;
+            DrawNumericSetting(list, "General Production Yields", ref generalOutputMult, ref gOutBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Milk Yields", ref milkOutputMult, ref mOutBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Wool Yields", ref woolOutputMult, ref wOutBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "Gathering Frequency", ref gatherFreqMult, ref gFreqBuf, GlobalMin, 10f);
             list.GapLine();
 
             Text.Font = GameFont.Medium;
             list.Label("Butcher Yields");
             Text.Font = GameFont.Small;
-            DrawNumericSetting(list, "Butcher Yield (All)", ref generalButcherMult, ref bGenBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Meat Only Mult", ref meatButcherMult, ref bMeatBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Leather Only Mult", ref leatherButcherMult, ref bLeathBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "General Butcher Yield", ref generalButcherMult, ref bGenBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Meat Yield", ref meatButcherMult, ref bMeatBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Leather Yield", ref leatherButcherMult, ref bLeathBuf, GlobalMin, 10f);
 
             list.End();
             Widgets.EndScrollView();
@@ -113,13 +137,8 @@ namespace RanchWorld
             Rect rect = list.GetRect(30f);
             if (buf == null) buf = val.ToString("F1");
             Widgets.Label(rect.LeftPart(0.4f), label);
-
             float newVal = Widgets.HorizontalSlider(new Rect(rect.x + rect.width * 0.45f, rect.y, rect.width * 0.35f, rect.height), val, min, max);
-            if (newVal != val)
-            {
-                val = (float)Math.Round(newVal, 1);
-                buf = val.ToString("F1");
-            }
+            if (newVal != val) { val = (float)Math.Round(newVal, 1); buf = val.ToString("F1"); }
             Widgets.TextFieldNumeric<float>(rect.RightPart(0.15f), ref val, ref buf, min, max);
         }
 
@@ -127,14 +146,10 @@ namespace RanchWorld
         {
             baseGrowthMult = 5f;
             humanGrowthMult = humanAgeMult = humanGestMult = animalGrowthMult = animalAgeMult = animalGestMult = 1f;
-            generalHungerMult = 1f;
-            humanHungerMult = 1f;
-            animalHungerMult = 1f;
-            herbivoreHungerMult = 2f;
-            carnivoreHungerMult = 1f;
-            omnivoreHungerMult = 1f;
+            generalHungerMult = 1f; humanHungerMult = 1f; animalHungerMult = 1f; herbivoreHungerMult = 1.7f; carnivoreHungerMult = 0.7f; omnivoreHungerMult = 1f;
+            generalStomachMult = 3f; humanStomachMult = 1f; animalStomachMult = 1f; herbivoreStomachMult = 2.5f; carnivoreStomachMult = 1.3f; omnivoreStomachMult = 1f;
             generalOutputMult = milkOutputMult = woolOutputMult = gatherFreqMult = generalButcherMult = meatButcherMult = leatherButcherMult = 1f;
-            bGrowBuf = hGrowBuf = hAgeBuf = hGestBuf = aGrowBuf = aAgeBuf = aGestBuf = gHungerBuf = hHungerBuf = cHungerBuf = oHungerBuf = gOutBuf = mOutBuf = wOutBuf = gFreqBuf = bGenBuf = bMeatBuf = bLeathBuf = hHungerBuf_Cat = aHungerBuf_Cat = null;
+            bGrowBuf = hGrowBuf = hAgeBuf = hGestBuf = aGrowBuf = aAgeBuf = aGestBuf = gHungerBuf = hHungerBuf_Cat = aHungerBuf_Cat = hHungerBuf = cHungerBuf = oHungerBuf = gStomBuf = hStomBuf_Cat = aStomBuf_Cat = hStomBuf = cStomBuf = oStomBuf = gOutBuf = mOutBuf = wOutBuf = gFreqBuf = bGenBuf = bMeatBuf = bLeathBuf = null;
         }
     }
 }

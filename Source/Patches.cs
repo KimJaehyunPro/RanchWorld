@@ -15,23 +15,28 @@ namespace RanchWorld
         {
             var harmony = new Harmony("Foo.RanchWorld");
 
+            // Hunger Rate (Metabolism)
             harmony.Patch(AccessTools.PropertyGetter(typeof(Need_Food), "FoodFallPerTick"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.HungerPostfix)));
 
+            // Stomach Size (Max Food)
+            harmony.Patch(AccessTools.PropertyGetter(typeof(Need_Food), "MaxLevel"),
+                null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.StomachPostfix)));
+
+            // Growth and Ageing
             harmony.Patch(AccessTools.PropertyGetter(typeof(Pawn_AgeTracker), "BiologicalTicksPerTick"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.AgeingPostfix)));
 
             harmony.Patch(AccessTools.Method(typeof(Hediff), nameof(Hediff.Tick)),
                 new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.GestationPrefix)));
 
+            // Production and Butcher Yields
             harmony.Patch(AccessTools.PropertyGetter(typeof(CompMilkable), "ResourceAmount"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.OutputPostfix)));
             harmony.Patch(AccessTools.PropertyGetter(typeof(CompShearable), "ResourceAmount"),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.OutputPostfix)));
-
             harmony.Patch(AccessTools.Method(typeof(Pawn), nameof(Pawn.ButcherProducts)),
                 null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.ButcherPostfix)));
-
             harmony.Patch(AccessTools.Method(typeof(CompHasGatherableBodyResource), "CompTick"),
                 new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.GatherFreqPrefix)));
         }
@@ -42,6 +47,50 @@ namespace RanchWorld
         private static readonly FieldInfo fullnessField = AccessTools.Field(typeof(CompHasGatherableBodyResource), "fullness");
         private static readonly FieldInfo animalGestField = AccessTools.Field(typeof(Hediff_Pregnant), "gestationProgress");
         private static readonly FieldInfo humanGestField = AccessTools.Field(AccessTools.TypeByName("RimWorld.Hediff_PregnantHuman"), "gestationProgress");
+
+        public static void StomachPostfix(Need_Food __instance, ref float __result, Pawn ___pawn)
+        {
+            if (___pawn == null || RanchWorldMod.settings == null) return;
+
+            // Start with base BodySize as the foundation for stomach capacity
+            float mult = RanchWorldMod.settings.generalStomachMult;
+
+            // Category Hierarchy
+            if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanStomachMult;
+            else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalStomachMult;
+
+            // Diet Hierarchy
+            FoodTypeFlags flags = ___pawn.RaceProps.foodType;
+            bool plants = (flags & FoodTypeFlags.VegetarianAnimal) != 0 || (flags & FoodTypeFlags.Plant) != 0;
+            bool meat = (flags & FoodTypeFlags.Meat) != 0 || (flags & FoodTypeFlags.CarnivoreAnimal) != 0;
+
+            if (plants && !meat) mult *= RanchWorldMod.settings.herbivoreStomachMult;
+            else if (meat && !plants) mult *= RanchWorldMod.settings.carnivoreStomachMult;
+            else mult *= RanchWorldMod.settings.omnivoreStomachMult;
+
+            // Override vanilla MaxLevel
+            __result = ___pawn.BodySize * mult;
+        }
+
+        public static void HungerPostfix(Need_Food __instance, ref float __result, Pawn ___pawn)
+        {
+            if (___pawn == null || RanchWorldMod.settings == null) return;
+
+            float mult = RanchWorldMod.settings.generalHungerMult;
+
+            if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanHungerMult;
+            else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalHungerMult;
+
+            FoodTypeFlags flags = ___pawn.RaceProps.foodType;
+            bool plants = (flags & FoodTypeFlags.VegetarianAnimal) != 0 || (flags & FoodTypeFlags.Plant) != 0;
+            bool meat = (flags & FoodTypeFlags.Meat) != 0 || (flags & FoodTypeFlags.CarnivoreAnimal) != 0;
+
+            if (plants && !meat) mult *= RanchWorldMod.settings.herbivoreHungerMult;
+            else if (meat && !plants) mult *= RanchWorldMod.settings.carnivoreHungerMult;
+            else mult *= RanchWorldMod.settings.omnivoreHungerMult;
+
+            __result *= (float)Math.Pow(___pawn.BodySize, 0.75) * mult;
+        }
 
         public static void AgeingPostfix(ref float __result, Pawn ___pawn)
         {
@@ -70,30 +119,6 @@ namespace RanchWorld
                 float extra = (1f / (__instance.pawn.RaceProps.gestationPeriodDays * 60000f)) * (mult - 1f);
                 targetField.SetValue(__instance, current + extra);
             }
-        }
-
-        public static void HungerPostfix(Need_Food __instance, ref float __result, Pawn ___pawn)
-        {
-            if (___pawn == null || RanchWorldMod.settings == null) return;
-
-            // 1. Start with Global Hunger
-            float mult = RanchWorldMod.settings.generalHungerMult;
-
-            // 2. Add Category (Human vs Animal) Hierarchy
-            if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanHungerMult;
-            else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalHungerMult;
-
-            // 3. Keep Diet Tweaks
-            FoodTypeFlags flags = ___pawn.RaceProps.foodType;
-            bool plants = (flags & FoodTypeFlags.VegetarianAnimal) != 0 || (flags & FoodTypeFlags.Plant) != 0;
-            bool meat = (flags & FoodTypeFlags.Meat) != 0 || (flags & FoodTypeFlags.CarnivoreAnimal) != 0;
-
-            if (plants && !meat) mult *= RanchWorldMod.settings.herbivoreHungerMult;
-            else if (meat && !plants) mult *= RanchWorldMod.settings.carnivoreHungerMult;
-            else mult *= RanchWorldMod.settings.omnivoreHungerMult;
-
-            // 4. Apply final calculation
-            __result *= (float)Math.Pow(___pawn.BodySize, 0.75) * mult;
         }
 
         public static void OutputPostfix(CompHasGatherableBodyResource __instance, ref int __result)
