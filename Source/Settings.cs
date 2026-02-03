@@ -16,7 +16,6 @@ namespace RanchWorld
         public float generalHungerMult = 1f, humanHungerMult = DefaultMult, animalHungerMult = DefaultMult;
         public float herbivoreHungerMult = 2f, carnivoreHungerMult = 1f, omnivoreHungerMult = 1f;
 
-        // Stomach Hierarchy
         public float generalStomachMult = 1f;
         public float humanStomachMult = DefaultMult;
         public float animalStomachMult = DefaultMult;
@@ -27,9 +26,9 @@ namespace RanchWorld
         public float generalOutputMult = DefaultMult, milkOutputMult = DefaultMult, woolOutputMult = DefaultMult, gatherFreqMult = 1f;
         public float generalButcherMult = DefaultMult, meatButcherMult = DefaultMult, leatherButcherMult = DefaultMult;
 
-        // NEW: Combat Settings
+        // Combat Settings
         public float healthScaleMult = 1.0f;
-        public float damageScaleMult = 0.5f; // Defaulted lower to avoid overpowered animals
+        public float damageScaleMult = 0.5f;
 
         private Vector2 scrollPosition = Vector2.zero;
         private string bGrowBuf, hGrowBuf, hAgeBuf, hGestBuf, aGrowBuf, aAgeBuf, aGestBuf;
@@ -71,7 +70,6 @@ namespace RanchWorld
             Scribe_Values.Look(ref meatButcherMult, "meatButcherMult", 1f);
             Scribe_Values.Look(ref leatherButcherMult, "leatherButcherMult", 1f);
 
-            // NEW: Scribe Combat Settings
             Scribe_Values.Look(ref healthScaleMult, "healthScaleMult", 1.0f);
             Scribe_Values.Look(ref damageScaleMult, "damageScaleMult", 0.5f);
         }
@@ -81,15 +79,14 @@ namespace RanchWorld
             if (Widgets.ButtonText(new Rect(0f, 0f, 150f, 30f), "Reset to Defaults")) ResetSettings();
 
             Rect outRect = new Rect(0f, 40f, inRect.width, inRect.height - 40f);
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1750f); // Increased height for new options
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1750f);
 
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
 
-            Text.Font = GameFont.Medium;
-            list.Label("Growth");
-            Text.Font = GameFont.Small;
+            // GROWTH
+            Text.Font = GameFont.Medium; list.Label("Growth"); Text.Font = GameFont.Small;
             DrawNumericSetting(list, "Global Growth", ref baseGrowthMult, ref bGrowBuf, GlobalMin, 60f);
             DrawNumericSetting(list, "  Human Growth", ref humanGrowthMult, ref hGrowBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "    Human Ageing", ref humanAgeMult, ref hAgeBuf, GlobalMin, 10f);
@@ -99,9 +96,8 @@ namespace RanchWorld
             DrawNumericSetting(list, "    Animal Gestation", ref animalGestMult, ref aGestBuf, GlobalMin, 10f);
             list.GapLine();
 
-            Text.Font = GameFont.Medium;
-            list.Label("Hunger Rate");
-            Text.Font = GameFont.Small;
+            // HUNGER
+            Text.Font = GameFont.Medium; list.Label("Hunger Rate"); Text.Font = GameFont.Small;
             DrawNumericSetting(list, "Global Hunger Rate", ref generalHungerMult, ref gHungerBuf, GlobalMin, 5f);
             DrawNumericSetting(list, "  Human Hunger Rate", ref humanHungerMult, ref hHungerBuf_Cat, GlobalMin, 5f);
             DrawNumericSetting(list, "  Animal Hunger Rate", ref animalHungerMult, ref aHungerBuf_Cat, GlobalMin, 5f);
@@ -110,9 +106,8 @@ namespace RanchWorld
             DrawNumericSetting(list, "    Omnivore Hunger Rate", ref omnivoreHungerMult, ref oHungerBuf, GlobalMin, 5f);
             list.GapLine();
 
-            Text.Font = GameFont.Medium;
-            list.Label("Stomach Capacity");
-            Text.Font = GameFont.Small;
+            // STOMACH
+            Text.Font = GameFont.Medium; list.Label("Stomach Capacity"); Text.Font = GameFont.Small;
             DrawNumericSetting(list, "Global Stomach Capacity", ref generalStomachMult, ref gStomBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Human Stomach Capacity", ref humanStomachMult, ref hStomBuf_Cat, GlobalMin, 10f);
             DrawNumericSetting(list, "  Animal Stomach Capacity", ref animalStomachMult, ref aStomBuf_Cat, GlobalMin, 10f);
@@ -121,27 +116,23 @@ namespace RanchWorld
             DrawNumericSetting(list, "    Omnivore Stomach Capacity", ref omnivoreStomachMult, ref oStomBuf, GlobalMin, 10f);
             list.GapLine();
 
-            Text.Font = GameFont.Medium;
-            list.Label("Production Yields");
-            Text.Font = GameFont.Small;
+            // PRODUCTION
+            Text.Font = GameFont.Medium; list.Label("Production Yields"); Text.Font = GameFont.Small;
             DrawNumericSetting(list, "General Production Yields", ref generalOutputMult, ref gOutBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Milk Yields", ref milkOutputMult, ref mOutBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Wool Yields", ref woolOutputMult, ref wOutBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "Gathering Frequency", ref gatherFreqMult, ref gFreqBuf, GlobalMin, 10f);
             list.GapLine();
 
-            Text.Font = GameFont.Medium;
-            list.Label("Butcher Yields");
-            Text.Font = GameFont.Small;
+            // BUTCHER
+            Text.Font = GameFont.Medium; list.Label("Butcher Yields"); Text.Font = GameFont.Small;
             DrawNumericSetting(list, "General Butcher Yield", ref generalButcherMult, ref bGenBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Meat Yield", ref meatButcherMult, ref bMeatBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Leather Yield", ref leatherButcherMult, ref bLeathBuf, GlobalMin, 10f);
             list.GapLine();
 
-            // NEW: Combat Section
-            Text.Font = GameFont.Medium;
-            list.Label("Combat Scaling (Based on Body Size)");
-            Text.Font = GameFont.Small;
+            // COMBAT
+            Text.Font = GameFont.Medium; list.Label("Combat Scaling (Based on Body Size)"); Text.Font = GameFont.Small;
             DrawNumericSetting(list, "Health Scale Multiplier", ref healthScaleMult, ref healthBuf, 0.1f, 5f);
             DrawNumericSetting(list, "Melee Damage Multiplier", ref damageScaleMult, ref damageBuf, 0.1f, 5f);
 
@@ -166,8 +157,6 @@ namespace RanchWorld
             generalHungerMult = 1f; humanHungerMult = 1f; animalHungerMult = 1f; herbivoreHungerMult = 1.7f; carnivoreHungerMult = 0.7f; omnivoreHungerMult = 1f;
             generalStomachMult = 3f; humanStomachMult = 1f; animalStomachMult = 1f; herbivoreStomachMult = 2.5f; carnivoreStomachMult = 1.3f; omnivoreStomachMult = 1f;
             generalOutputMult = milkOutputMult = woolOutputMult = gatherFreqMult = generalButcherMult = meatButcherMult = leatherButcherMult = 1f;
-
-            // NEW: Reset Combat
             healthScaleMult = 1.0f;
             damageScaleMult = 0.5f;
 
