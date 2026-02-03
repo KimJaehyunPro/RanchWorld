@@ -11,47 +11,43 @@ namespace RanchWorld
     [StaticConstructorOnStartup]
     public static class HarmonyInit
     {
-        // FIX 1: Use 'severityInt' (Base class field) to prevent MissingFieldException
         public static AccessTools.FieldRef<Hediff, float> HediffSeverity =
             AccessTools.FieldRefAccess<Hediff, float>("severityInt");
 
         static HarmonyInit()
         {
-            Log.Message("[RanchWorld] Init: Starting...");
             var harmony = new Harmony("Foo.RanchWorld");
 
-            // --- METABOLISM ---
-            TryPatchProperty(harmony, typeof(Need_Food), "FoodFallPerTick", nameof(RanchPatches.HungerPostfix));
-            TryPatchProperty(harmony, typeof(Need_Food), "MaxLevel", nameof(RanchPatches.StomachPostfix));
+            Log.Message("[RanchWorld] Starting Harmony patches...");
 
-            // --- AGEING (Force Update) ---
-            MethodInfo ageTick = AccessTools.Method(typeof(Pawn_AgeTracker), "AgeTick");
+            // --- AGEING - THE CORRECT METHOD FOR RIMWORLD 1.6 ---
+            MethodInfo ageTick = AccessTools.Method(typeof(Pawn_AgeTracker), "TickBiologicalAge");
             if (ageTick != null)
-                harmony.Patch(ageTick, null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.AgeTickPostfix)));
-
-            // --- LEARNING (Biotech) ---
-            TryPatchProperty(harmony, typeof(Pawn_AgeTracker), "GrowthPointsPerTick", nameof(RanchPatches.GrowthPointsPostfix));
-
-            // --- GESTATION (HIERARCHY FIX) ---
-            // We search for the Tick method starting at the Child and moving up to the Parent/Grandparent.
-            // This solves the "ArgumentException: You can only patch implemented methods" error.
-            MethodInfo validAnimalTick = FindImplementedTick(typeof(Hediff_Pregnant));
-            if (validAnimalTick != null)
             {
-                Log.Message($"[RanchWorld] Patching Animal Gestation on: {validAnimalTick.DeclaringType.Name}.Tick");
-                harmony.Patch(validAnimalTick, null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.AnimalGestationTick)));
+                harmony.Patch(ageTick, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.TickBiologicalAgePrefix)));
+                Log.Message("[RanchWorld] Successfully patched TickBiologicalAge");
+            }
+            else
+            {
+                Log.Error("[RanchWorld] Could not find TickBiologicalAge method!");
             }
 
-            // Human Pregnancy (Biotech Check)
-            Type humanType = AccessTools.TypeByName("RimWorld.Hediff_PregnantHuman");
-            if (humanType != null)
+            // --- METABOLISM & GROWTH ---
+            TryPatchProperty(harmony, typeof(Need_Food), "FoodFallPerTick", nameof(RanchPatches.HungerPostfix));
+            TryPatchProperty(harmony, typeof(Need_Food), "MaxLevel", nameof(RanchPatches.StomachPostfix));
+            TryPatchProperty(harmony, typeof(Pawn_AgeTracker), "GrowthPointsPerTick", nameof(RanchPatches.GrowthPointsPostfix));
+
+            // --- GESTATION ---
+            MethodInfo validTick = FindImplementedTick(typeof(Hediff_Pregnant));
+            if (validTick != null)
+                harmony.Patch(validTick, null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.AnimalGestationTick)));
+
+            Type humanPreg = AccessTools.TypeByName("RimWorld.Hediff_PregnantHuman");
+            if (humanPreg != null)
             {
-                MethodInfo validHumanTick = FindImplementedTick(humanType);
-                if (validHumanTick != null && validHumanTick != validAnimalTick) // Don't double-patch if they share the same base method
-                {
-                    Log.Message($"[RanchWorld] Patching Human Gestation on: {validHumanTick.DeclaringType.Name}.Tick");
-                    harmony.Patch(validHumanTick, null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.HumanGestationTick)));
-                }
+                MethodInfo humanTick = FindImplementedTick(humanPreg);
+                if (humanTick != null)
+                    harmony.Patch(humanTick, null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.HumanGestationTick)));
             }
 
             // --- PRODUCTION ---
@@ -62,7 +58,6 @@ namespace RanchWorld
             if (gatherTick != null)
                 harmony.Patch(gatherTick, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.GatherFreqPrefix)));
 
-            // --- BUTCHER ---
             MethodInfo butcher = AccessTools.Method(typeof(Pawn), nameof(Pawn.ButcherProducts));
             if (butcher != null)
                 harmony.Patch(butcher, null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.ButcherPostfix)));
@@ -70,24 +65,24 @@ namespace RanchWorld
             // --- COMBAT ---
             TryPatchProperty(harmony, typeof(Pawn), "HealthScale", nameof(RanchPatches.HealthScalePostfix));
 
-            MethodInfo damageMethod = AccessTools.Method(typeof(VerbProperties), "AdjustedMeleeDamageAmount",
+            MethodInfo dmg = AccessTools.Method(typeof(VerbProperties), "AdjustedMeleeDamageAmount",
                 new Type[] { typeof(Tool), typeof(Pawn), typeof(Thing), typeof(HediffComp_VerbGiver) });
-            if (damageMethod != null)
-                harmony.Patch(damageMethod, null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.DamageScalePostfix)));
+            if (dmg != null)
+                harmony.Patch(dmg, null, new HarmonyMethod(typeof(RanchPatches), nameof(RanchPatches.DamageScalePostfix)));
 
-            Log.Message("[RanchWorld] Init: Complete.");
+            Log.Message("[RanchWorld] All Harmony patches complete!");
         }
 
-        // Helper: Safe Property Patcher
-        static void TryPatchProperty(Harmony harmony, Type type, string propName, string patchName)
+        static void TryPatchProperty(Harmony harmony, Type type, string prop, string patch)
         {
             if (type == null) return;
-            MethodInfo method = AccessTools.PropertyGetter(type, propName);
+            MethodInfo method = AccessTools.PropertyGetter(type, prop);
             if (method != null)
-                harmony.Patch(method, null, new HarmonyMethod(typeof(RanchPatches), patchName));
+            {
+                harmony.Patch(method, null, new HarmonyMethod(typeof(RanchPatches), patch));
+            }
         }
 
-        // Helper: Finds the actual class that implements the method to avoid "Abstract/Not Implemented" crashes
         static MethodInfo FindImplementedTick(Type type)
         {
             while (type != null && type != typeof(object))
@@ -102,49 +97,137 @@ namespace RanchWorld
 
     public static class RanchPatches
     {
-        private static FieldInfo ageBiologicalTicks = AccessTools.Field(typeof(Pawn_AgeTracker), "ageBiologicalTicksInt");
-        private static MethodInfo recalcLifeStage = AccessTools.Method(typeof(Pawn_AgeTracker), "RecalculateLifeStageIndex");
-        private static FieldInfo fullnessField = AccessTools.Field(typeof(CompHasGatherableBodyResource), "fullness");
+        private static int debugCounter = 0;
 
-        // --- AGEING ---
-        public static void AgeTickPostfix(Pawn_AgeTracker __instance, Pawn ___pawn)
+        // --- THE CORRECT AGING METHOD FOR RIMWORLD 1.6 ---
+        public static bool TickBiologicalAgePrefix(Pawn_AgeTracker __instance)
         {
-            if (___pawn == null || RanchWorldMod.settings == null) return;
-            if (!___pawn.RaceProps.Animal) return; // Only affect animals
+            try
+            {
+                Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
+                if (pawn == null) return true;
 
-            float mult = RanchWorldMod.settings.baseGrowthMult * RanchWorldMod.settings.animalGrowthMult * RanchWorldMod.settings.animalAgeMult;
+                // Get multiplier
+                float mult = 1f;
+                if (RanchWorldMod.settings != null)
+                {
+                    mult = RanchWorldMod.settings.baseGrowthMult;
+                    if (pawn.RaceProps.Humanlike)
+                        mult *= RanchWorldMod.settings.humanGrowthMult * RanchWorldMod.settings.humanAgeMult;
+                    else if (pawn.RaceProps.Animal)
+                        mult *= RanchWorldMod.settings.animalGrowthMult * RanchWorldMod.settings.animalAgeMult;
+                }
 
-            // Debug Log (Throttled)
-            if (mult > 1.0f && ___pawn.IsHashIntervalTick(600))
-                Log.Message($"[RanchWorld] Ageing {___pawn.LabelShort} at {mult}x speed.");
+                // Debug log occasionally
+                debugCounter++;
+                if (debugCounter % 1000 == 0 && pawn.IsColonist)
+                {
+                    Log.Message($"[RanchWorld] TickBiologicalAge for {pawn.LabelShort}: mult={mult:F2}");
+                }
 
-            if (mult <= 1f) return;
+                if (mult <= 1.001f) return true; // Use vanilla
 
-            float extraTicks = mult - 1f;
-            long currentAge = (long)ageBiologicalTicks.GetValue(__instance);
-            ageBiologicalTicks.SetValue(__instance, currentAge + (long)extraTicks);
+                // REPLACE VANILLA - add accelerated ticks
+                int ticksToAge = Mathf.RoundToInt(mult);
 
-            recalcLifeStage.Invoke(__instance, null);
+                Traverse traverse = Traverse.Create(__instance);
+
+                // Get current biological age
+                long ageBioTicks = traverse.Field("ageBiologicalTicksInt").GetValue<long>();
+
+                // Add the accelerated ticks to biological age
+                long newBioTicks = ageBioTicks + ticksToAge;
+                traverse.Field("ageBiologicalTicksInt").SetValue(newBioTicks);
+
+                // ALSO update chronological age (important for humans)
+                long ageChronoTicks = traverse.Field("ageChronologicalTicksInt").GetValue<long>();
+                long newChronoTicks = ageChronoTicks + ticksToAge;
+                traverse.Field("ageChronologicalTicksInt").SetValue(newChronoTicks);
+
+                // Handle growth for animals
+                if (pawn.RaceProps.Animal)
+                {
+                    float growth = traverse.Field("growthInt").GetValue<float>();
+                    if (growth < 1f)
+                    {
+                        float lifeExpectancyTicks = pawn.RaceProps.lifeExpectancy * 3600000f;
+                        float adultAgeTicks = lifeExpectancyTicks * 0.1f;
+
+                        if (adultAgeTicks > 0)
+                        {
+                            float growthGain = (ticksToAge / adultAgeTicks);
+                            float newGrowth = Mathf.Min(1f, growth + growthGain);
+                            traverse.Field("growthInt").SetValue(newGrowth);
+                        }
+                    }
+                }
+
+                // Recalculate life stage
+                traverse.Method("RecalculateLifeStageIndex").GetValue();
+
+                // Check for biological birthdays
+                long ageBioYears = newBioTicks / 3600000L;
+                long prevAgeBioYears = ageBioTicks / 3600000L;
+
+                if (ageBioYears > prevAgeBioYears)
+                {
+                    for (long i = prevAgeBioYears + 1; i <= ageBioYears; i++)
+                    {
+                        try
+                        {
+                            traverse.Method("BirthdayBiological", new object[] { (int)i }).GetValue();
+                        }
+                        catch
+                        {
+                            // Birthday method might not exist or have different signature
+                        }
+                    }
+                }
+
+                // Check for chronological birthdays (important for humans - affects skills, health, etc.)
+                if (pawn.RaceProps.Humanlike)
+                {
+                    long ageChronoYears = newChronoTicks / 3600000L;
+                    long prevAgeChronoYears = ageChronoTicks / 3600000L;
+
+                    if (ageChronoYears > prevAgeChronoYears)
+                    {
+                        for (long i = prevAgeChronoYears + 1; i <= ageChronoYears; i++)
+                        {
+                            try
+                            {
+                                traverse.Method("BirthdayChronological", new object[] { (int)i }).GetValue();
+                            }
+                            catch
+                            {
+                                // Birthday method might not exist or have different signature
+                            }
+                        }
+                    }
+                }
+
+                return false; // Skip vanilla execution
+            }
+            catch (Exception e)
+            {
+                Log.Error($"[RanchWorld] Error in TickBiologicalAgePrefix: {e}");
+                return true;
+            }
         }
 
         // --- GESTATION ---
         public static void AnimalGestationTick(Hediff __instance)
         {
             if (RanchWorldMod.settings == null || __instance.pawn == null) return;
-            if (!(__instance is Hediff_Pregnant)) return; // Strict Check
+            if (!(__instance is Hediff_Pregnant)) return;
 
-            float mult = RanchWorldMod.settings.baseGrowthMult * RanchWorldMod.settings.animalGrowthMult * RanchWorldMod.settings.animalGestMult;
-
-            // Debug Log (Throttled)
-            if (mult > 1.0f && __instance.pawn.IsHashIntervalTick(600))
-                Log.Message($"[RanchWorld] Animal Gestation Tick {__instance.pawn.LabelShort} at {mult}x speed.");
+            float mult = RanchWorldMod.settings.baseGrowthMult *
+                         RanchWorldMod.settings.animalGrowthMult *
+                         RanchWorldMod.settings.animalGestMult;
 
             if (mult <= 1f) return;
 
-            float daily = 1f / (__instance.pawn.RaceProps.gestationPeriodDays * 60000f);
-            float extra = daily * (mult - 1f);
-
-            // FIX: Uses the valid base field 'severityInt'
+            float extra = (1f / (__instance.pawn.RaceProps.gestationPeriodDays * 60000f)) * (mult - 1f);
             HarmonyInit.HediffSeverity(__instance) += extra;
         }
 
@@ -152,22 +235,27 @@ namespace RanchWorld
         {
             if (RanchWorldMod.settings == null || __instance.pawn == null) return;
 
-            float mult = RanchWorldMod.settings.baseGrowthMult * RanchWorldMod.settings.humanGrowthMult * RanchWorldMod.settings.humanGestMult;
+            float mult = RanchWorldMod.settings.baseGrowthMult *
+                         RanchWorldMod.settings.humanGrowthMult *
+                         RanchWorldMod.settings.humanGestMult;
+
             if (mult <= 1f) return;
 
-            float daily = 1f / (__instance.pawn.RaceProps.gestationPeriodDays * 60000f);
-            float extra = daily * (mult - 1f);
-
+            float extra = (1f / (__instance.pawn.RaceProps.gestationPeriodDays * 60000f)) * (mult - 1f);
             HarmonyInit.HediffSeverity(__instance) += extra;
         }
 
-        // --- BIOTECH GROWTH ---
+        // --- GROWTH POINTS ---
         public static void GrowthPointsPostfix(ref float __result, Pawn ___pawn)
         {
             if (___pawn == null || RanchWorldMod.settings == null) return;
+
             float mult = RanchWorldMod.settings.baseGrowthMult;
-            if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanGrowthMult * RanchWorldMod.settings.humanAgeMult;
-            else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalGrowthMult * RanchWorldMod.settings.animalAgeMult;
+            if (___pawn.RaceProps.Humanlike)
+                mult *= RanchWorldMod.settings.humanGrowthMult * RanchWorldMod.settings.humanAgeMult;
+            else if (___pawn.RaceProps.Animal)
+                mult *= RanchWorldMod.settings.animalGrowthMult * RanchWorldMod.settings.animalAgeMult;
+
             __result *= mult;
         }
 
@@ -175,22 +263,19 @@ namespace RanchWorld
         public static void ResourceOutputPostfix(CompHasGatherableBodyResource __instance, ref int __result)
         {
             if (RanchWorldMod.settings == null) return;
+
             Pawn pawn = (Pawn)AccessTools.Field(typeof(ThingComp), "parent").GetValue(__instance);
             if (pawn == null) return;
 
             float amount = 0f;
-
             if (__instance is CompMilkable)
-            {
-                amount = __result * pawn.BodySize;
-                amount *= RanchWorldMod.settings.generalOutputMult * RanchWorldMod.settings.milkOutputMult;
-            }
+                amount = __result * pawn.BodySize *
+                         RanchWorldMod.settings.generalOutputMult *
+                         RanchWorldMod.settings.milkOutputMult;
             else if (__instance is CompShearable)
-            {
-                float surfaceAreaFactor = Mathf.Pow(pawn.BodySize, 2f / 3f);
-                amount = __result * surfaceAreaFactor;
-                amount *= RanchWorldMod.settings.generalOutputMult * RanchWorldMod.settings.woolOutputMult;
-            }
+                amount = __result * Mathf.Pow(pawn.BodySize, 2f / 3f) *
+                         RanchWorldMod.settings.generalOutputMult *
+                         RanchWorldMod.settings.woolOutputMult;
             else return;
 
             __result = Mathf.RoundToInt(amount);
@@ -201,6 +286,7 @@ namespace RanchWorld
             if (RanchWorldMod.settings == null || RanchWorldMod.settings.gatherFreqMult <= 1f) return;
             if (!(__instance is CompMilkable) && !(__instance is CompShearable)) return;
 
+            FieldInfo fullnessField = AccessTools.Field(typeof(CompHasGatherableBodyResource), "fullness");
             float f = (float)fullnessField.GetValue(__instance);
             fullnessField.SetValue(__instance, Mathf.Min(1f, f + (1f / 60000f) * (RanchWorldMod.settings.gatherFreqMult - 1f)));
         }
@@ -209,67 +295,52 @@ namespace RanchWorld
         public static void ButcherPostfix(Pawn __instance, ref IEnumerable<Thing> __result)
         {
             if (RanchWorldMod.settings == null || __result == null || __instance == null) return;
-            List<Thing> processedList = new List<Thing>();
-            float bodySize = __instance.BodySize;
-            if (bodySize <= 0.01f) bodySize = 0.01f;
 
-            float leatherConversionFactor = Mathf.Pow(bodySize, -1f / 3f);
+            List<Thing> list = new List<Thing>();
+            float size = Mathf.Max(__instance.BodySize, 0.01f);
+            float lath = Mathf.Pow(size, -1f / 3f);
 
             foreach (Thing t in __result)
             {
-                float finalCount = t.stackCount;
+                float count = t.stackCount;
                 if (t.def.IsLeather)
-                {
-                    finalCount *= leatherConversionFactor;
-                    finalCount *= RanchWorldMod.settings.leatherButcherMult * RanchWorldMod.settings.generalButcherMult;
-                }
+                    count *= lath * RanchWorldMod.settings.leatherButcherMult * RanchWorldMod.settings.generalButcherMult;
                 else if (t.def.IsMeat)
-                {
-                    finalCount *= RanchWorldMod.settings.meatButcherMult * RanchWorldMod.settings.generalButcherMult;
-                }
+                    count *= RanchWorldMod.settings.meatButcherMult * RanchWorldMod.settings.generalButcherMult;
                 else
-                {
-                    finalCount *= RanchWorldMod.settings.generalButcherMult;
-                }
-                t.stackCount = GenMath.RoundRandom(finalCount);
-                if (t.stackCount > 0) processedList.Add(t);
+                    count *= RanchWorldMod.settings.generalButcherMult;
+
+                t.stackCount = GenMath.RoundRandom(count);
+                if (t.stackCount > 0) list.Add(t);
             }
-            __result = processedList;
+            __result = list;
         }
 
-        // --- COMBAT & METABOLISM ---
+        // --- COMBAT ---
         public static void HealthScalePostfix(Pawn __instance, ref float __result)
         {
             if (__instance == null || RanchWorldMod.settings == null) return;
             if (__instance.RaceProps.Animal)
-            {
                 __result = __instance.BodySize * RanchWorldMod.settings.healthScaleMult;
-            }
         }
 
         public static void DamageScalePostfix(VerbProperties __instance, Tool tool, Pawn attacker, ref float __result)
         {
             if (attacker == null || RanchWorldMod.settings == null) return;
             if (attacker.RaceProps.Animal)
-            {
                 __result *= attacker.BodySize * RanchWorldMod.settings.damageScaleMult;
-            }
         }
 
+        // --- METABOLISM ---
         public static void HungerPostfix(Need_Food __instance, ref float __result, Pawn ___pawn)
         {
             if (___pawn == null || RanchWorldMod.settings == null) return;
+
             float mult = RanchWorldMod.settings.generalHungerMult;
-            if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanHungerMult;
-            else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalHungerMult;
-
-            FoodTypeFlags flags = ___pawn.RaceProps.foodType;
-            bool plants = (flags & FoodTypeFlags.VegetarianAnimal) != 0 || (flags & FoodTypeFlags.Plant) != 0;
-            bool meat = (flags & FoodTypeFlags.Meat) != 0 || (flags & FoodTypeFlags.CarnivoreAnimal) != 0;
-
-            if (plants && !meat) mult *= RanchWorldMod.settings.herbivoreHungerMult;
-            else if (meat && !plants) mult *= RanchWorldMod.settings.carnivoreHungerMult;
-            else mult *= RanchWorldMod.settings.omnivoreHungerMult;
+            if (___pawn.RaceProps.Humanlike)
+                mult *= RanchWorldMod.settings.humanHungerMult;
+            else if (___pawn.RaceProps.Animal)
+                mult *= RanchWorldMod.settings.animalHungerMult;
 
             __result *= (float)Math.Pow(___pawn.BodySize, 0.75) * mult;
         }
@@ -277,17 +348,12 @@ namespace RanchWorld
         public static void StomachPostfix(Need_Food __instance, ref float __result, Pawn ___pawn)
         {
             if (___pawn == null || RanchWorldMod.settings == null) return;
+
             float mult = RanchWorldMod.settings.generalStomachMult;
-            if (___pawn.RaceProps.Humanlike) mult *= RanchWorldMod.settings.humanStomachMult;
-            else if (___pawn.RaceProps.Animal) mult *= RanchWorldMod.settings.animalStomachMult;
-
-            FoodTypeFlags flags = ___pawn.RaceProps.foodType;
-            bool plants = (flags & FoodTypeFlags.VegetarianAnimal) != 0 || (flags & FoodTypeFlags.Plant) != 0;
-            bool meat = (flags & FoodTypeFlags.Meat) != 0 || (flags & FoodTypeFlags.CarnivoreAnimal) != 0;
-
-            if (plants && !meat) mult *= RanchWorldMod.settings.herbivoreStomachMult;
-            else if (meat && !plants) mult *= RanchWorldMod.settings.carnivoreStomachMult;
-            else mult *= RanchWorldMod.settings.omnivoreStomachMult;
+            if (___pawn.RaceProps.Humanlike)
+                mult *= RanchWorldMod.settings.humanStomachMult;
+            else if (___pawn.RaceProps.Animal)
+                mult *= RanchWorldMod.settings.animalStomachMult;
 
             __result = ___pawn.BodySize * mult;
         }

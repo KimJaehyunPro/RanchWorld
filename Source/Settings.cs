@@ -117,18 +117,18 @@ namespace RanchWorld
             list.GapLine();
 
             // PRODUCTION
-            Text.Font = GameFont.Medium; list.Label("Production Yields"); Text.Font = GameFont.Small;
+            Text.Font = GameFont.Medium; list.Label("Production Yields (Auto-Scaled by Body Size)"); Text.Font = GameFont.Small;
             DrawNumericSetting(list, "General Production Yields", ref generalOutputMult, ref gOutBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Milk Yields", ref milkOutputMult, ref mOutBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Wool Yields", ref woolOutputMult, ref wOutBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Milk Yields (3D Scale)", ref milkOutputMult, ref mOutBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Wool Yields (2D Scale)", ref woolOutputMult, ref wOutBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "Gathering Frequency", ref gatherFreqMult, ref gFreqBuf, GlobalMin, 10f);
             list.GapLine();
 
             // BUTCHER
-            Text.Font = GameFont.Medium; list.Label("Butcher Yields"); Text.Font = GameFont.Small;
+            Text.Font = GameFont.Medium; list.Label("Butcher Yields (Auto-Scaled by Body Size)"); Text.Font = GameFont.Small;
             DrawNumericSetting(list, "General Butcher Yield", ref generalButcherMult, ref bGenBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Meat Yield", ref meatButcherMult, ref bMeatBuf, GlobalMin, 10f);
-            DrawNumericSetting(list, "  Leather Yield", ref leatherButcherMult, ref bLeathBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Meat Yield (Linear Scale)", ref meatButcherMult, ref bMeatBuf, GlobalMin, 10f);
+            DrawNumericSetting(list, "  Leather Yield (2D Scale)", ref leatherButcherMult, ref bLeathBuf, GlobalMin, 10f);
             list.GapLine();
 
             // COMBAT
@@ -152,7 +152,7 @@ namespace RanchWorld
 
         private void ResetSettings()
         {
-            baseGrowthMult = 5f;
+            baseGrowthMult = 10f;
             humanGrowthMult = humanAgeMult = humanGestMult = animalGrowthMult = animalAgeMult = animalGestMult = 1f;
             generalHungerMult = 1f; humanHungerMult = 1f; animalHungerMult = 1f; herbivoreHungerMult = 1.7f; carnivoreHungerMult = 0.7f; omnivoreHungerMult = 1f;
             generalStomachMult = 3f; humanStomachMult = 1f; animalStomachMult = 1f; herbivoreStomachMult = 2.5f; carnivoreStomachMult = 1.3f; omnivoreStomachMult = 1f;
