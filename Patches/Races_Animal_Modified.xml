@@ -106,7 +106,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -116,7 +118,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -795,7 +799,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -805,7 +811,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -1162,7 +1170,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -1172,7 +1182,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -1279,7 +1291,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -1289,7 +1303,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -1647,7 +1663,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -1657,7 +1675,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -1891,7 +1911,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -1901,7 +1923,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -2383,7 +2407,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -2393,7 +2419,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -2751,7 +2779,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -2761,7 +2791,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3243,7 +3275,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3253,7 +3287,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3363,7 +3399,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3373,7 +3411,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3483,7 +3523,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3493,7 +3535,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3603,7 +3647,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3613,7 +3659,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3723,7 +3771,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3733,7 +3783,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3843,7 +3895,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3853,7 +3907,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3963,7 +4019,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -3973,7 +4031,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -4207,7 +4267,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -4217,7 +4279,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -4276,7 +4340,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -4286,7 +4352,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -4520,7 +4588,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -4530,7 +4600,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -4640,7 +4712,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -4650,7 +4724,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5132,7 +5208,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5142,7 +5220,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5252,7 +5332,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5262,7 +5344,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5321,7 +5405,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5331,7 +5417,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5470,7 +5558,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5480,7 +5570,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5714,7 +5806,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -5724,7 +5818,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -6529,7 +6625,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -6539,7 +6637,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -6649,7 +6749,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -6659,7 +6761,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7265,7 +7369,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7275,7 +7381,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7385,7 +7493,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7395,7 +7505,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7505,7 +7617,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7515,7 +7629,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7625,7 +7741,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7635,7 +7753,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7869,7 +7989,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7879,7 +8001,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7989,7 +8113,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -7999,7 +8125,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -8109,7 +8237,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -8119,7 +8249,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -8477,7 +8609,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -8487,7 +8621,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -8845,7 +8981,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -8855,7 +8993,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -9089,7 +9229,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -9099,7 +9241,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -9333,7 +9477,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -9343,7 +9489,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -9826,7 +9974,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -9836,7 +9986,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -9946,7 +10098,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -9956,7 +10110,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -10166,7 +10322,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -10176,7 +10334,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -10286,7 +10446,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -10296,7 +10458,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -10356,7 +10520,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -10366,7 +10532,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -10848,7 +11016,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
@@ -10858,7 +11028,9 @@
                                 <value>
                                     <litterSizeCurve Inherit="false">
                                         <points>
+                                            <li>(0.5, 0)</li>
                                             <li>(1, 1)</li>
+                                            <li>(1.5, 0)</li>
                                         </points>
                                     </litterSizeCurve>
                                 </value>
