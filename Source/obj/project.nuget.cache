@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "pJNNGgfsYps=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\hyun5\\OneDrive\\Documents\\Code\\Game mods\\Rimworld\\Ranchworld\\RanchWorld\\Source\\RanchWorld.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hyun5\\.nuget\\packages\\krafs.rimworld.ref\\1.6.4871\\krafs.rimworld.ref.1.6.4871.nupkg.sha512",
+    "C:\\Users\\hyun5\\.nuget\\packages\\lib.harmony.ref\\2.4.3\\lib.harmony.ref.2.4.3.nupkg.sha512",
+    "C:\\Users\\hyun5\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "C:\\Users\\hyun5\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.3\\microsoft.netframework.referenceassemblies.net472.1.0.3.nupkg.sha512",
+    "C:\\Users\\hyun5\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
