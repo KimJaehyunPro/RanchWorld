@@ -2373,13 +2373,13 @@
                             <match Class="PatchOperationReplace">
                                 <xpath>Defs/ThingDef[defName="Caribou"]/race/baseBodySize</xpath>
                                 <value>
-                                    <baseBodySize>3.00</baseBodySize>
+                                    <baseBodySize>2.00</baseBodySize>
                                 </value>
                             </match>
                             <nomatch Class="PatchOperationAdd">
                                 <xpath>Defs/ThingDef[defName="Caribou"]/race</xpath>
                                 <value>
-                                    <baseBodySize>3.00</baseBodySize>
+                                    <baseBodySize>2.00</baseBodySize>
                                 </value>
                             </nomatch>
                         </li>
@@ -2400,7 +2400,7 @@
                             </nomatch>
                         </li>
 
-                        <li Class="PatchOperationConditional">
+                        <li Class="PatchOperationConditional"> 
                             <xpath>Defs/ThingDef[defName="Caribou"]/race/litterSizeCurve</xpath>
                             <match Class="PatchOperationReplace">
                                 <xpath>Defs/ThingDef[defName="Caribou"]/race/litterSizeCurve</xpath>
@@ -2869,13 +2869,13 @@
                             <match Class="PatchOperationReplace">
                                 <xpath>Defs/ThingDef[defName="Chinchilla"]/race/baseBodySize</xpath>
                                 <value>
-                                    <baseBodySize>0.01</baseBodySize>
+                                    <baseBodySize>0.05</baseBodySize>
                                 </value>
                             </match>
                             <nomatch Class="PatchOperationAdd">
                                 <xpath>Defs/ThingDef[defName="Chinchilla"]/race</xpath>
                                 <value>
-                                    <baseBodySize>0.01</baseBodySize>
+                                    <baseBodySize>0.05</baseBodySize>
                                 </value>
                             </nomatch>
                         </li>
@@ -3613,13 +3613,13 @@
                             <match Class="PatchOperationReplace">
                                 <xpath>Defs/ThingDef[defName="Dromedary"]/race/baseBodySize</xpath>
                                 <value>
-                                    <baseBodySize>8.33</baseBodySize>
+                                    <baseBodySize>6.50</baseBodySize>
                                 </value>
                             </match>
                             <nomatch Class="PatchOperationAdd">
                                 <xpath>Defs/ThingDef[defName="Dromedary"]/race</xpath>
                                 <value>
-                                    <baseBodySize>8.33</baseBodySize>
+                                    <baseBodySize>6.50</baseBodySize>
                                 </value>
                             </nomatch>
                         </li>
@@ -7459,13 +7459,13 @@
                             <match Class="PatchOperationReplace">
                                 <xpath>Defs/ThingDef[defName="Muffalo"]/race/baseBodySize</xpath>
                                 <value>
-                                    <baseBodySize>5.00</baseBodySize>
+                                    <baseBodySize>15.00</baseBodySize>
                                 </value>
                             </match>
                             <nomatch Class="PatchOperationAdd">
                                 <xpath>Defs/ThingDef[defName="Muffalo"]/race</xpath>
                                 <value>
-                                    <baseBodySize>5.00</baseBodySize>
+                                    <baseBodySize>15.00</baseBodySize>
                                 </value>
                             </nomatch>
                         </li>
