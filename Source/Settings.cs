@@ -31,6 +31,9 @@ namespace RanchWorld
         public float damageScaleMult = 0.5f;
 
         private Vector2 scrollPosition = Vector2.zero;
+        private float viewHeight = 1800f;
+        private Vector2 previewScroll = Vector2.zero;
+        private float previewHeight = 1200f;
         private string bGrowBuf, hGrowBuf, hAgeBuf, hGestBuf, aGrowBuf, aAgeBuf, aGestBuf;
         private string gHungerBuf, hHungerBuf_Cat, aHungerBuf_Cat, hHungerBuf, cHungerBuf, oHungerBuf;
         private string gStomBuf, hStomBuf_Cat, aStomBuf_Cat, hStomBuf, cStomBuf, oStomBuf;
@@ -78,8 +81,23 @@ namespace RanchWorld
         {
             if (Widgets.ButtonText(new Rect(0f, 0f, 150f, 30f), "Reset to Defaults")) ResetSettings();
 
-            Rect outRect = new Rect(0f, 40f, inRect.width, inRect.height - 40f);
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1750f);
+            // Left: sliders. Right: live preview of the final multipliers, so changes show up immediately.
+            float colGap = 12f;
+            float leftWidth = (inRect.width - colGap) * 0.55f;
+            Rect outRect = new Rect(0f, 40f, leftWidth, inRect.height - 40f);
+            Rect viewRect = new Rect(0f, 0f, leftWidth - 16f, viewHeight);
+
+            Rect previewOut = new Rect(leftWidth + colGap, 40f, inRect.width - leftWidth - colGap, inRect.height - 40f);
+            Rect previewInner = previewOut.ContractedBy(4f);
+            Rect previewView = new Rect(0f, 0f, previewInner.width - 16f, previewHeight);
+            Widgets.DrawMenuSection(previewOut);
+            Widgets.BeginScrollView(previewInner, ref previewScroll, previewView);
+            Listing_Standard preview = new Listing_Standard();
+            preview.Begin(previewView);
+            DrawEffectiveSummary(preview);
+            previewHeight = Mathf.Max(preview.CurHeight + 20f, 200f);
+            preview.End();
+            Widgets.EndScrollView();
 
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
             Listing_Standard list = new Listing_Standard();
@@ -136,8 +154,126 @@ namespace RanchWorld
             DrawNumericSetting(list, "Health Scale Multiplier", ref healthScaleMult, ref healthBuf, 0.1f, 5f);
             DrawNumericSetting(list, "Melee Damage Multiplier", ref damageScaleMult, ref damageBuf, 0.1f, 5f);
 
+            viewHeight = Mathf.Max(list.CurHeight + 20f, 600f);
             list.End();
             Widgets.EndScrollView();
+        }
+
+        // --- EFFECTIVE MULTIPLIER PREVIEW ---
+        // These formulas mirror what Patches.cs actually does, so the numbers shown here
+        // are what the game applies, including quirks (e.g. ageing can't go below 1x).
+        private static readonly Color NotAppliedColor = new Color(0.6f, 0.6f, 0.6f);
+        private static readonly Color WarnColor = new Color(1f, 0.8f, 0.4f);
+
+        // Ageing and gestation patches only ever ADD progress; a product below 1 does nothing.
+        private static float SpeedUpOnly(float mult) => mult > 1f ? mult : 1f;
+        private static float AgeingEffective(float mult) => mult > 1.05f ? mult : 1f;
+
+        private static string X(float v) => v >= 100f ? v.ToString("F0") + "x" : v.ToString("0.##") + "x";
+
+        private void DrawEffectiveSummary(Listing_Standard list)
+        {
+            Text.Font = GameFont.Medium; list.Label("Effective Multipliers"); Text.Font = GameFont.Small;
+            GUI.color = NotAppliedColor;
+            list.Label("Final values after all sliders are multiplied together, matching what the mod's code applies. 1x = vanilla.");
+            GUI.color = Color.white;
+
+            float B = baseGrowthMult;
+            float hAge = B * humanGrowthMult * humanAgeMult;
+            float hGrowthPts = B * humanGrowthMult;
+            float hGestOwn = B * humanGrowthMult * humanGestMult;
+            float aAge = B * animalGrowthMult * animalAgeMult;
+            float aGest = B * animalGrowthMult * animalGestMult;
+            // Human pregnancy is a subclass of animal pregnancy, so both gestation patches run on it
+            // and their extra progress adds up.
+            float hGest = 1f + (SpeedUpOnly(hGestOwn) - 1f) + (SpeedUpOnly(aGest) - 1f);
+
+            SubHeader(list, "Growth & Ageing");
+            Row(list, "Human ageing", X(AgeingEffective(hAge)),
+                $"Global {B:0.##} x Human Growth {humanGrowthMult:0.##} x Human Ageing {humanAgeMult:0.##}" + (hAge < 1f ? "  (below 1x not supported: stays 1x)" : ""), hAge < 1f);
+            Row(list, "Human growth points", X(hGrowthPts),
+                $"Global {B:0.##} x Human Growth {humanGrowthMult:0.##}  (growth moment progress per tick)", false);
+            Row(list, "Human gestation", X(hGest),
+                $"1 + (human {X(SpeedUpOnly(hGestOwn))} - 1) + (animal {X(SpeedUpOnly(aGest))} - 1)  (animal gestation also applies to humans)", aGest > 1f);
+            Row(list, "Animal ageing", X(AgeingEffective(aAge)),
+                $"Global {B:0.##} x Animal Growth {animalGrowthMult:0.##} x Animal Ageing {animalAgeMult:0.##}" + (aAge < 1f ? "  (below 1x not supported: stays 1x)" : ""), aAge < 1f);
+            Row(list, "Animal gestation", X(SpeedUpOnly(aGest)),
+                $"Global {B:0.##} x Animal Growth {animalGrowthMult:0.##} x Animal Gestation {animalGestMult:0.##}" + (aGest < 1f ? "  (below 1x not supported: stays 1x)" : ""), aGest < 1f);
+
+            float hHunger = generalHungerMult * humanHungerMult;
+            float aHunger = generalHungerMult * animalHungerMult;
+            SubHeader(list, "Hunger Rate");
+            Row(list, "Human hunger", X(hHunger) + " x size^0.75",
+                $"Global {generalHungerMult:0.##} x Human {humanHungerMult:0.##}" + SizeExamples(hHunger, 0.75f), false);
+            Row(list, "Animal hunger", X(aHunger) + " x size^0.75",
+                $"Global {generalHungerMult:0.##} x Animal {animalHungerMult:0.##}" + SizeExamples(aHunger, 0.75f), false);
+            NotApplied(list, "Herbivore / Carnivore / Omnivore hunger", "not used by the code yet");
+
+            float hStom = generalStomachMult * humanStomachMult;
+            float aStom = generalStomachMult * animalStomachMult;
+            SubHeader(list, "Stomach Capacity (replaces vanilla)");
+            Row(list, "Human stomach", X(hStom) + " x body size",
+                $"Global {generalStomachMult:0.##} x Human {humanStomachMult:0.##}", false);
+            Row(list, "Animal stomach", X(aStom) + " x body size",
+                $"Global {generalStomachMult:0.##} x Animal {animalStomachMult:0.##}", false);
+            NotApplied(list, "Herbivore / Carnivore / Omnivore stomach", "not used by the code yet");
+
+            float milk = generalOutputMult * milkOutputMult;
+            float wool = generalOutputMult * woolOutputMult;
+            SubHeader(list, "Production");
+            Row(list, "Milk amount", X(milk) + " x size",
+                $"General {generalOutputMult:0.##} x Milk {milkOutputMult:0.##}" + SizeExamples(milk, 1f), false);
+            Row(list, "Wool amount", X(wool) + " x size^(2/3)",
+                $"General {generalOutputMult:0.##} x Wool {woolOutputMult:0.##}" + SizeExamples(wool, 2f / 3f), false);
+            NotApplied(list, "Gathering frequency", "not used by the code yet");
+
+            float meat = generalButcherMult * meatButcherMult;
+            float leather = generalButcherMult * leatherButcherMult;
+            SubHeader(list, "Butchering");
+            Row(list, "Meat", X(meat),
+                $"General {generalButcherMult:0.##} x Meat {meatButcherMult:0.##}", false);
+            Row(list, "Leather", X(leather) + " x size^(-1/3)",
+                $"General {generalButcherMult:0.##} x Leather {leatherButcherMult:0.##}" + SizeExamples(leather, -1f / 3f), false);
+            Row(list, "Other products", X(generalButcherMult), "General butcher yield", false);
+
+            SubHeader(list, "Combat");
+            NotApplied(list, "Health scale", "not used by the code yet");
+            NotApplied(list, "Melee damage", "not used by the code yet");
+        }
+
+        private static string SizeExamples(float mult, float exponent)
+        {
+            return $"; size 0.5: {X(mult * Mathf.Pow(0.5f, exponent))}, size 1: {X(mult)}, size 2: {X(mult * Mathf.Pow(2f, exponent))}";
+        }
+
+        private static void SubHeader(Listing_Standard list, string text)
+        {
+            list.Gap(6f);
+            GUI.color = new Color(0.8f, 0.9f, 1f);
+            list.Label(text);
+            GUI.color = Color.white;
+        }
+
+        private static void Row(Listing_Standard list, string label, string value, string formula, bool warn)
+        {
+            Rect rect = list.GetRect(Text.LineHeight);
+            Widgets.Label(rect.LeftPart(0.45f), "  " + label);
+            GUI.color = warn ? WarnColor : Color.white;
+            Widgets.Label(rect.RightPart(0.55f), value);
+            GUI.color = Color.white;
+            TooltipHandler.TipRegion(rect, formula);
+            Text.Font = GameFont.Tiny;
+            GUI.color = NotAppliedColor;
+            list.Label("      = " + formula);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+        }
+
+        private static void NotApplied(Listing_Standard list, string label, string reason)
+        {
+            GUI.color = NotAppliedColor;
+            list.Label($"  {label}: no effect ({reason})");
+            GUI.color = Color.white;
         }
 
         private void DrawNumericSetting(Listing_Standard list, string label, ref float val, ref string buf, float min, float max)
