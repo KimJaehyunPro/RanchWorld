@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hyun5\\OneDrive\\Documents\\Code\\Game mods\\Rimworld\\Ranchworld\\RanchWorld\\Source\\RanchWorld.csproj": {}
+    "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\Ranchworld\\Source\\RanchWorld.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hyun5\\OneDrive\\Documents\\Code\\Game mods\\Rimworld\\Ranchworld\\RanchWorld\\Source\\RanchWorld.csproj": {
+    "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\Ranchworld\\Source\\RanchWorld.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hyun5\\OneDrive\\Documents\\Code\\Game mods\\Rimworld\\Ranchworld\\RanchWorld\\Source\\RanchWorld.csproj",
+        "projectUniqueName": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\Ranchworld\\Source\\RanchWorld.csproj",
         "projectName": "RanchWorld",
-        "projectPath": "C:\\Users\\hyun5\\OneDrive\\Documents\\Code\\Game mods\\Rimworld\\Ranchworld\\RanchWorld\\Source\\RanchWorld.csproj",
+        "projectPath": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\Ranchworld\\Source\\RanchWorld.csproj",
         "packagesPath": "C:\\Users\\hyun5\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hyun5\\OneDrive\\Documents\\Code\\Game mods\\Rimworld\\Ranchworld\\RanchWorld\\Source\\obj\\",
+        "outputPath": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\Ranchworld\\Source\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hyun5\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -3,3 +3,8 @@ C:\Users\hyun5\OneDrive\Documents\Code\Game mods\Rimworld\Ranchworld\RanchWorld\
 C:\Users\hyun5\OneDrive\Documents\Code\Game mods\Rimworld\Ranchworld\RanchWorld\Source\obj\Release\RanchWorld.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\hyun5\OneDrive\Documents\Code\Game mods\Rimworld\Ranchworld\RanchWorld\Source\obj\Release\RanchWorld.csproj.CoreCompileInputs.cache
 C:\Users\hyun5\OneDrive\Documents\Code\Game mods\Rimworld\Ranchworld\RanchWorld\Source\obj\Release\RanchWorld.dll
+E:\SteamLibrary\steamapps\common\RimWorld\Mods\Ranchworld\Assemblies\RanchWorld.dll
+E:\SteamLibrary\steamapps\common\RimWorld\Mods\Ranchworld\Source\obj\Release\RanchWorld.csproj.AssemblyReference.cache
+E:\SteamLibrary\steamapps\common\RimWorld\Mods\Ranchworld\Source\obj\Release\RanchWorld.GeneratedMSBuildEditorConfig.editorconfig
+E:\SteamLibrary\steamapps\common\RimWorld\Mods\Ranchworld\Source\obj\Release\RanchWorld.csproj.CoreCompileInputs.cache
+E:\SteamLibrary\steamapps\common\RimWorld\Mods\Ranchworld\Source\obj\Release\RanchWorld.dll
