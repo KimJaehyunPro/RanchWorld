@@ -26,10 +26,6 @@ namespace RanchWorld
         public float generalOutputMult = DefaultMult, milkOutputMult = DefaultMult, woolOutputMult = DefaultMult, gatherFreqMult = 1f;
         public float generalButcherMult = DefaultMult, meatButcherMult = DefaultMult, leatherButcherMult = DefaultMult;
 
-        // Combat Settings
-        public float healthScaleMult = 1.0f;
-        public float damageScaleMult = 0.5f;
-
         private Vector2 scrollPosition = Vector2.zero;
         private float viewHeight = 1800f;
         private Vector2 previewScroll = Vector2.zero;
@@ -38,7 +34,6 @@ namespace RanchWorld
         private string gHungerBuf, hHungerBuf_Cat, aHungerBuf_Cat, hHungerBuf, cHungerBuf, oHungerBuf;
         private string gStomBuf, hStomBuf_Cat, aStomBuf_Cat, hStomBuf, cStomBuf, oStomBuf;
         private string gOutBuf, mOutBuf, wOutBuf, gFreqBuf, bGenBuf, bMeatBuf, bLeathBuf;
-        private string healthBuf, damageBuf;
 
         public override void ExposeData()
         {
@@ -72,9 +67,6 @@ namespace RanchWorld
             Scribe_Values.Look(ref generalButcherMult, "generalButcherMult", 1f);
             Scribe_Values.Look(ref meatButcherMult, "meatButcherMult", 1f);
             Scribe_Values.Look(ref leatherButcherMult, "leatherButcherMult", 1f);
-
-            Scribe_Values.Look(ref healthScaleMult, "healthScaleMult", 1.0f);
-            Scribe_Values.Look(ref damageScaleMult, "damageScaleMult", 0.5f);
         }
 
         public void DoWindowContents(Rect inRect)
@@ -147,12 +139,6 @@ namespace RanchWorld
             DrawNumericSetting(list, "General Butcher Yield", ref generalButcherMult, ref bGenBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Meat Yield (Linear Scale)", ref meatButcherMult, ref bMeatBuf, GlobalMin, 10f);
             DrawNumericSetting(list, "  Leather Yield (2D Scale)", ref leatherButcherMult, ref bLeathBuf, GlobalMin, 10f);
-            list.GapLine();
-
-            // COMBAT
-            Text.Font = GameFont.Medium; list.Label("Combat Scaling (Based on Body Size)"); Text.Font = GameFont.Small;
-            DrawNumericSetting(list, "Health Scale Multiplier", ref healthScaleMult, ref healthBuf, 0.1f, 5f);
-            DrawNumericSetting(list, "Melee Damage Multiplier", ref damageScaleMult, ref damageBuf, 0.1f, 5f);
 
             viewHeight = Mathf.Max(list.CurHeight + 20f, 600f);
             list.End();
@@ -235,10 +221,6 @@ namespace RanchWorld
             Row(list, "Leather", X(leather) + " x size^(-1/3)",
                 $"General {generalButcherMult:0.##} x Leather {leatherButcherMult:0.##}" + SizeExamples(leather, -1f / 3f), false);
             Row(list, "Other products", X(generalButcherMult), "General butcher yield", false);
-
-            SubHeader(list, "Combat");
-            NotApplied(list, "Health scale", "not used by the code yet");
-            NotApplied(list, "Melee damage", "not used by the code yet");
         }
 
         private static string SizeExamples(float mult, float exponent)
@@ -293,11 +275,8 @@ namespace RanchWorld
             generalHungerMult = 1f; humanHungerMult = 1f; animalHungerMult = 1f; herbivoreHungerMult = 1.7f; carnivoreHungerMult = 0.7f; omnivoreHungerMult = 1f;
             generalStomachMult = 3f; humanStomachMult = 1f; animalStomachMult = 1f; herbivoreStomachMult = 2.5f; carnivoreStomachMult = 1.3f; omnivoreStomachMult = 1f;
             generalOutputMult = milkOutputMult = woolOutputMult = gatherFreqMult = generalButcherMult = meatButcherMult = leatherButcherMult = 1f;
-            healthScaleMult = 1.0f;
-            damageScaleMult = 0.5f;
 
             bGrowBuf = hGrowBuf = hAgeBuf = hGestBuf = aGrowBuf = aAgeBuf = aGestBuf = gHungerBuf = hHungerBuf_Cat = aHungerBuf_Cat = hHungerBuf = cHungerBuf = oHungerBuf = gStomBuf = hStomBuf_Cat = aStomBuf_Cat = hStomBuf = cStomBuf = oStomBuf = gOutBuf = mOutBuf = wOutBuf = gFreqBuf = bGenBuf = bMeatBuf = bLeathBuf = null;
-            healthBuf = damageBuf = null;
         }
     }
 }
